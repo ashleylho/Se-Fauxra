@@ -18,3 +18,7 @@ main .row {
 .column-full {
   width: 100%;
 }
+
+.column-half {
+  width: 50%;
+}

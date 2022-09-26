@@ -34,4 +34,38 @@ main {
 
 ul {
   list-style: none;
+  padding-left: 0;
+}
+
+li {
+  border: 1px solid #395b64;
+  border-radius: 5px;
+  width: 85%;
+  margin: 0 auto 1.1rem;
+}
+
+h4 {
+  width: 90%;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.info {
+  padding-left: 5px;
+}
+
+p {
+  margin-top: 10px;
+}
+
+img {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  padding-right: 5px;
+}
+
+.product {
+  padding: 0 0.75rem;
 }
