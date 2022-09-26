@@ -12,18 +12,15 @@
   flex-wrap: wrap;
 }
 
-.column-full {
-  width: 100%;
-}
-
-.column-half {
-  width: 50%;
-}
-
+.column-full,
 .column-third {
   width: 100%;
 
   /* margin: 0.5rem 0.8rem; */
+}
+
+.column-half {
+  width: 50%;
 }
 
 @media screen and (min-width: 768px) {
