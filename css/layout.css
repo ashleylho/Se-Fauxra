@@ -11,10 +11,6 @@
   display: flex;
 }
 
-main .row {
-  margin: 1.5rem 0;
-}
-
 .column-full {
   width: 100%;
 }

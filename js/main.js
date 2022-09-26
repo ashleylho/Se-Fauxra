@@ -9,6 +9,7 @@ xhr.send();
 function loadData(event) {
   for (var i = 0; i < xhr.response.length; i++) {
     var $li = document.createElement('li');
+    $li.className = 'hidden';
     $productList.appendChild($li);
 
     var $div1 = document.createElement('div');
