@@ -1,4 +1,5 @@
 var $productList = document.querySelector('#product-list');
+var $search = document.querySelector('.search');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -9,7 +10,7 @@ xhr.send();
 function loadData(event) {
   for (var i = 0; i < xhr.response.length; i++) {
     var $li = document.createElement('li');
-    $li.className = 'hidden';
+    $li.className = 'column-third hidden';
     $productList.appendChild($li);
 
     var $div1 = document.createElement('div');
@@ -88,6 +89,22 @@ function loadData(event) {
     var $p = document.createElement('p');
     $p.textContent = '$' + xhr.response[i].price;
     $div3.appendChild($p);
+  }
+}
 
+document.addEventListener('keydown', handleEnter);
+
+function handleEnter(event) {
+  var $product = document.querySelectorAll('li');
+  var text = $search.value.toLowerCase();
+  for (var i = 0; i < xhr.response.length; i++) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      if (text === xhr.response[i].product_type) {
+        $product[i].classList.remove('hidden');
+      } else {
+        $product[i].classList.add('hidden');
+      }
+    }
   }
 }
