@@ -31,3 +31,7 @@ main {
   font-size: 1.25rem;
   border: none;
 }
+
+ul {
+  list-style: none;
+}
