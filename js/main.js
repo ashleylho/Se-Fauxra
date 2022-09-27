@@ -1,5 +1,6 @@
 var $productList = document.querySelector('#product-list');
 var $search = document.querySelector('.search');
+var $form = document.querySelector('form');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -10,7 +11,7 @@ xhr.send();
 function loadData(event) {
   for (var i = 0; i < xhr.response.length; i++) {
     var $li = document.createElement('li');
-    $li.className = 'column-third half hidden';
+    $li.className = 'column-third half';
     $productList.appendChild($li);
 
     var $div = document.createElement('div');
@@ -40,55 +41,21 @@ function loadData(event) {
     var $span = document.createElement('span');
     $div3.appendChild($span);
 
-    var $i = document.createElement('i');
-    if (xhr.response[i].rating >= 0.5 && xhr.response[i].rating < 1) {
-      $i.className = 'fa-solid fa-star-half-stroke';
-    } else if (xhr.response[i].rating >= 1) {
-      $i.className = 'fa-solid fa-star';
-    } else {
-      $i.className = 'fa-regular fa-star';
+    for (var j = 0; j < 5; j++) {
+      if (j + 0.5 <= xhr.response[i].rating && xhr.response[i].rating < (j + 1)) {
+        var $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star-half-stroke';
+        $span.appendChild($i);
+      } else if (j < xhr.response[i].rating && j + 0.5 < xhr.response[i].rating) {
+        $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star';
+        $span.appendChild($i);
+      } else {
+        $i = document.createElement('i');
+        $i.className = 'fa-regular fa-star';
+        $span.appendChild($i);
+      }
     }
-    $span.appendChild($i);
-
-    $i = document.createElement('i');
-    if (xhr.response[i].rating >= 1.5 && xhr.response[i].rating < 2) {
-      $i.className = 'fa-solid fa-star-half-stroke';
-    } else if (xhr.response[i].rating >= 2) {
-      $i.className = 'fa-solid fa-star';
-    } else {
-      $i.className = 'fa-regular fa-star';
-    }
-    $span.appendChild($i);
-
-    $i = document.createElement('i');
-    if (xhr.response[i].rating >= 2.5 && xhr.response[i].rating < 3) {
-      $i.className = 'fa-solid fa-star-half-stroke';
-    } else if (xhr.response[i].rating >= 3) {
-      $i.className = 'fa-solid fa-star';
-    } else {
-      $i.className = 'fa-regular fa-star';
-    }
-    $span.appendChild($i);
-
-    $i = document.createElement('i');
-    if (xhr.response[i].rating >= 3.5 && xhr.response[i].rating < 4) {
-      $i.className = 'fa-solid fa-star-half-stroke';
-    } else if (xhr.response[i].rating >= 4) {
-      $i.className = 'fa-solid fa-star';
-    } else {
-      $i.className = 'fa-regular fa-star';
-    }
-    $span.appendChild($i);
-
-    $i = document.createElement('i');
-    if (xhr.response[i].rating >= 4.5 && xhr.response[i].rating < 5) {
-      $i.className = 'fa-solid fa-star-half-stroke';
-    } else if (xhr.response[i].rating === 5) {
-      $i.className = 'fa-solid fa-star';
-    } else {
-      $i.className = 'fa-regular fa-star';
-    }
-    $span.appendChild($i);
 
     var $p = document.createElement('p');
     $p.textContent = '$' + xhr.response[i].price;
@@ -96,19 +63,17 @@ function loadData(event) {
   }
 }
 
-document.addEventListener('keydown', handleEnter);
+$form.addEventListener('submit', handleSubmit);
 
-function handleEnter(event) {
+function handleSubmit(event) {
+  event.preventDefault();
   var $product = document.querySelectorAll('li');
   var text = $search.value.toLowerCase();
   for (var i = 0; i < $product.length; i++) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      if (text === xhr.response[i].product_type) {
-        $product[i].classList.remove('hidden');
-      } else {
-        $product[i].classList.add('hidden');
-      }
+    if (text === xhr.response[i].product_type) {
+      $product[i].classList.remove('hidden');
+    } else {
+      $product[i].classList.add('hidden');
     }
   }
 }

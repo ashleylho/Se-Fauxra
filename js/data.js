@@ -18,5 +18,5 @@ function beforeUnload(event) {
 
 var previousDataJSON = localStorage.getItem('API data');
 if (previousDataJSON !== null) {
-  xhr.response = JSON.parse(previousDataJSON);
+  data.products = JSON.parse(previousDataJSON);
 }
