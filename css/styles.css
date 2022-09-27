@@ -71,10 +71,15 @@ ul {
   border-radius: 5px;
 }
 
+.border-div:hover {
+  border: 3px solid #395b64;
+}
+
 h4 {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 100%;
+  margin-right: 2px;
 }
 
 .info {
