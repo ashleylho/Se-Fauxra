@@ -86,7 +86,7 @@ h4 {
   padding-left: 5px;
 }
 
-p {
+.p-search {
   margin-top: 10px;
   margin-bottom: 0;
 }
@@ -100,4 +100,46 @@ img {
 
 .product {
   padding: 0.75rem;
+}
+
+/* styling for desktop version of product info/description */
+.img-product-info,
+.description {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.product-basics {
+  text-align: center;
+}
+
+.price-desktop {
+  display: inline;
+  margin-right: 0.75rem;
+}
+
+.description {
+  border: 1px solid #395b64;
+  border-radius: 5px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin: 0.25rem auto;
+  font-size: 2rem;
+}
+
+h3 {
+  margin: 0.5rem 0;
+}
+
+.p-description {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.h3-product-basics {
+  font-size: 1.25rem;
+  font-weight: 500;
 }

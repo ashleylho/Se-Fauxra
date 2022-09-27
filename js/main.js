@@ -58,6 +58,7 @@ function loadData(event) {
     }
 
     var $p = document.createElement('p');
+    $p.className = 'p-search';
     $p.textContent = '$' + xhr.response[i].price;
     $div3.appendChild($p);
   }
