@@ -1,6 +1,7 @@
 /* exported data */
 var data = {
-  entries: []
+  products: [],
+  wishlist: []
 };
 
 var xhr = new XMLHttpRequest();

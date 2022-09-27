@@ -101,7 +101,7 @@ document.addEventListener('keydown', handleEnter);
 function handleEnter(event) {
   var $product = document.querySelectorAll('li');
   var text = $search.value.toLowerCase();
-  for (var i = 0; i < xhr.response.length; i++) {
+  for (var i = 0; i < $product.length; i++) {
     if (event.keyCode === 13) {
       event.preventDefault();
       if (text === xhr.response[i].product_type) {
