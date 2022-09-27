@@ -15,8 +15,6 @@
 .column-full,
 .column-third {
   width: 100%;
-
-  /* margin: 0.5rem 0.8rem; */
 }
 
 .column-half {
@@ -25,6 +23,12 @@
 
 @media screen and (min-width: 768px) {
   .column-third {
-    width: calc(100% / 3);
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .column-third {
+    width: 33%;
   }
 }

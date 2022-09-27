@@ -10,12 +10,16 @@ xhr.send();
 function loadData(event) {
   for (var i = 0; i < xhr.response.length; i++) {
     var $li = document.createElement('li');
-    $li.className = 'column-third hidden';
+    $li.className = 'column-third half hidden';
     $productList.appendChild($li);
+
+    var $div = document.createElement('div');
+    $div.className = 'border-div';
+    $li.appendChild($div);
 
     var $div1 = document.createElement('div');
     $div1.className = 'row product';
-    $li.appendChild($div1);
+    $div.appendChild($div1);
 
     var $div2 = document.createElement('div');
     $div2.className = 'column-half';

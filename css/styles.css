@@ -69,16 +69,16 @@ ul {
   width: 100%;
 }
 
-li {
+.border-div {
+  margin: 0.6rem;
   border: 1px solid #395b64;
   border-radius: 5px;
 }
 
 h4 {
-  width: 90%;
   margin-top: 0;
   margin-bottom: 10px;
-  font-size: 1rem;
+  font-size: 100%;
 }
 
 .info {
@@ -87,6 +87,7 @@ h4 {
 
 p {
   margin-top: 10px;
+  margin-bottom: 0;
 }
 
 img {
