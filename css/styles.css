@@ -113,6 +113,10 @@ img {
   text-align: center;
 }
 
+.desktop-img {
+  margin-bottom: 1rem;
+}
+
 .price-desktop {
   display: inline;
   margin-right: 0.75rem;

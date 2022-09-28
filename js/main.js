@@ -1,8 +1,9 @@
 var $productList = document.querySelector('#product-list');
 var $search = document.querySelector('.search');
 var $form = document.querySelector('form');
-var $container = document.querySelector('.main-container');
-var $productDetails = document.querySelector('#product-details');
+// var $container = document.querySelector('.main-container');
+var $productDetails = document.querySelector('#product-details-desktop');
+// var $productDetailsMobile = document.querySelector('#product-details-mobile');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -13,9 +14,9 @@ xhr.send();
 function loadData(event) {
   for (var i = 0; i < xhr.response.length; i++) {
     var $li = document.createElement('li');
-    $li.className = 'column-third hidden';
-    $li.setAttribute('data-product-id', i + 1);
-    $li.setAttribute('data-product-type', xhr.response[i].product_type);
+    $li.className = 'column-third hidden single-product';
+    $li.setAttribute('data-productId', i + 1);
+    $li.setAttribute('data-productType', xhr.response[i].product_type);
     $productList.appendChild($li);
 
     var $div = document.createElement('div');
@@ -77,7 +78,7 @@ function handleSubmit(event) {
   var $product = document.querySelectorAll('li');
   var text = $search.value.toLowerCase();
   for (var i = 0; i < $product.length; i++) {
-    if (text === $product[i].dataset.productType) {
+    if (text === $product[i].dataset.producttype) {
       $product[i].classList.remove('hidden');
     } else {
       $product[i].classList.add('hidden');
@@ -102,8 +103,8 @@ function renderData() {
     var bestResultsDescription = xhr.response[i].description.slice(colon + 1);
 
     var $li = document.createElement('li');
-    $li.setAttribute('data-product-id', i + 1);
-    $li.className = 'product-details';
+    $li.setAttribute('data-productId', i + 1);
+    $li.className = 'single-product-details hidden';
     $productDetails.appendChild($li);
 
     var $div1 = document.createElement('div');
@@ -116,6 +117,7 @@ function renderData() {
 
     var $img = document.createElement('img');
     $img.setAttribute('src', xhr.response[i].api_featured_image);
+    $img.className = 'desktop-img';
     $div2.appendChild($img);
 
     var $div3 = document.createElement('div');
@@ -185,14 +187,19 @@ function renderData() {
   }
 }
 
-$container.addEventListener('click', handleClick);
+$productList.addEventListener('click', handleClick);
 
 function handleClick(event) {
-  var closestId = event.target.closest('[data-product-id]');
-  var $li = document.querySelectorAll('.product-details');
+  var closestId = event.target.closest('li');
+  var $li = document.querySelectorAll('.single-product');
+  var $liDescription = document.querySelectorAll('.single-product-details');
   for (var i = 0; i < $li.length; i++) {
     if ($li[i] === closestId) {
-      $productList.classList.add('hidden');
+      $li[i].classList.add('hidden');
+      $liDescription[i].classList.remove('hidden');
+    } else {
+      $li[i].classList.add('hidden');
+      $liDescription[i].classList.add('hidden');
     }
   }
 }
