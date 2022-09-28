@@ -169,6 +169,10 @@ function renderData() {
       }
     }
 
+    $i = document.createElement('i');
+    $i.className = 'fa-regular fa-heart heart-desktop';
+    $div3.appendChild($i);
+
     var $div4 = document.createElement('div');
     $div4.className = 'row description';
     $li.appendChild($div4);
