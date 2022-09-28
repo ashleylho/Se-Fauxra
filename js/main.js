@@ -67,6 +67,7 @@ function loadData(event) {
     $div3.appendChild($p);
   }
 
+  data.products = xhr.response;
   renderData();
 }
 
@@ -283,6 +284,7 @@ function handleClick(event) {
   var $li = document.querySelectorAll('.single-product');
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
+  data.view = 'description';
 
   for (var i = 0; i < $li.length; i++) {
     if (window.matchMedia('(min-width: 376px)').matches) {
