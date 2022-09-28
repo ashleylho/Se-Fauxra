@@ -22,12 +22,14 @@ $form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
-  var $product = document.querySelectorAll('li');
+  var $product = document.querySelectorAll('.single-product');
   var text = $search.value.toLowerCase();
   for (var i = 0; i < $product.length; i++) {
-    if (text === $product[i].dataset.producttype) {
+    if (text === $product[i].dataset.productType) {
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
+      $mobile.classList.add('hidden');
+      $desktop.classList.add('hidden');
     } else {
       $product[i].classList.add('hidden');
     }
@@ -40,8 +42,8 @@ function renderData() {
     // product list
     var $li = document.createElement('li');
     $li.className = 'column-third hidden single-product';
-    $li.setAttribute('data-productId', i + 1);
-    $li.setAttribute('data-productType', xhr.response[i].product_type);
+    $li.setAttribute('data-product-id', i + 1);
+    $li.setAttribute('data-product-type', xhr.response[i].product_type);
     $productList.appendChild($li);
 
     var $div = document.createElement('div');
@@ -109,7 +111,7 @@ function renderData() {
 
     // desktop dom
     $li = document.createElement('li');
-    $li.setAttribute('data-productId', i + 1);
+    $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-desktop hidden';
     $productDetails.appendChild($li);
 
@@ -192,7 +194,7 @@ function renderData() {
     }
     // mobile dom
     $li = document.createElement('li');
-    $li.setAttribute('data-productId', i + 1);
+    $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-mobile hidden';
     $productDetailsMobile.appendChild($li);
 
