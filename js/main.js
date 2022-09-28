@@ -229,6 +229,10 @@ function renderData() {
     $img.setAttribute('src', xhr.response[i].api_featured_image);
     $div2.appendChild($img);
 
+    $i = document.createElement('i');
+    $i.className = 'fa-regular fa-heart heart-mobile';
+    $div2.appendChild($i);
+
     $div3 = document.createElement('div');
     $div3.className = 'row';
     $div1.appendChild($div3);
