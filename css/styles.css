@@ -151,6 +151,7 @@ h3 {
 /* styling for mobile */
 .img-mobile {
   width: 65%;
+  margin-bottom: 1rem;
 }
 
 .h2-mobile {
