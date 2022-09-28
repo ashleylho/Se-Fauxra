@@ -94,6 +94,10 @@ function renderData() {
     $p.textContent = '$' + xhr.response[i].price;
     $div3.appendChild($p);
 
+    $i = document.createElement('i');
+    $i.className = 'fa-regular fa-heart';
+    $div1.appendChild($i);
+
     // manipulating name and description data
     var stringName = xhr.response[i].name.slice(10);
     var indexOf = xhr.response[i].description.toLowerCase().indexOf('for best results');
