@@ -1,6 +1,7 @@
 var $productList = document.querySelector('#product-list');
 var $search = document.querySelector('.search');
 var $form = document.querySelector('form');
+var $container = document.querySelector('.main-container');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -62,6 +63,8 @@ function loadData(event) {
     $p.textContent = '$' + xhr.response[i].price;
     $div3.appendChild($p);
   }
+
+  renderData();
 }
 
 $form.addEventListener('submit', handleSubmit);
@@ -78,3 +81,104 @@ function handleSubmit(event) {
     }
   }
 }
+
+function renderData() {
+  for (var i = 0; i < xhr.response.length; i++) {
+    var stringName = xhr.response[i].name.slice(10);
+    var indexOf = xhr.response[i].description.toLowerCase().indexOf('for best results');
+    if (indexOf > 0) {
+      var description = xhr.response[i].description.slice(0, indexOf);
+    } else {
+      description = xhr.response[i].description;
+    }
+
+    var colon = xhr.response[i].description.indexOf(':');
+    if (colon > 0) {
+      var bestResultsHeader = xhr.response[i].description.slice(indexOf, colon + 1);
+    }
+    var bestResultsDescription = xhr.response[i].description.slice(colon + 1);
+
+    var $div1 = document.createElement('div');
+    $div1.className = 'row img-product-info';
+    $container.appendChild($div1);
+
+    var $div2 = document.createElement('div');
+    $div2.className = 'column-half';
+    $div1.appendChild($div2);
+
+    var $img = document.createElement('img');
+    $img.setAttribute('src', xhr.response[i].api_featured_image);
+    $div2.appendChild($img);
+
+    var $div3 = document.createElement('div');
+    $div3.className = 'column-half product-basics';
+    $div1.appendChild($div3);
+
+    var $h2 = document.createElement('h2');
+    $h2.textContent = 'Maybelline';
+    $div3.appendChild($h2);
+
+    var $h3 = document.createElement('h3');
+    $h3.className = 'h3-product-basics';
+    $h3.textContent = stringName;
+    $div3.appendChild($h3);
+
+    var $p = document.createElement('p');
+    $p.className = 'price-desktop';
+    $p.textContent = '$' + xhr.response[i].price;
+    $div3.appendChild($p);
+
+    var $span = document.createElement('span');
+    $div3.appendChild($span);
+
+    for (var j = 0; j < 5; j++) {
+      if (j + 0.5 <= xhr.response[i].rating && xhr.response[i].rating < (j + 1)) {
+        var $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star-half-stroke';
+        $span.appendChild($i);
+      } else if (j < xhr.response[i].rating && j + 0.5 < xhr.response[i].rating) {
+        $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star';
+        $span.appendChild($i);
+      } else {
+        $i = document.createElement('i');
+        $i.className = 'fa-regular fa-star';
+        $span.appendChild($i);
+      }
+    }
+
+    var $div4 = document.createElement('div');
+    $div4.className = 'row description';
+    $container.appendChild($div4);
+
+    var $div5 = document.createElement('div');
+    $div5.className = 'column-full';
+    $div4.appendChild($div5);
+
+    var $2ndh3 = document.createElement('h3');
+    $2ndh3.textContent = 'Description:';
+    $div5.appendChild($2ndh3);
+
+    var $2ndp = document.createElement('p');
+    $2ndp.textContent = description;
+    $2ndp.className = 'p-description';
+    $div5.appendChild($2ndp);
+
+    if (xhr.response[i].description.toLowerCase().includes('for best results')) {
+      var $3rdh3 = document.createElement('h3');
+      $3rdh3.textContent = bestResultsHeader;
+      $div5.appendChild($3rdh3);
+
+      var $3rdp = document.createElement('p');
+      $3rdp.textContent = bestResultsDescription;
+      $3rdp.className = 'p-description';
+      $div5.appendChild($3rdp);
+    }
+  }
+  // console.log($container);
+}
+
+// $ul.addEventListener('click', handleClick);
+
+// function handleClick(event) {
+// }
