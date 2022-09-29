@@ -94,9 +94,18 @@ function renderData() {
     $p.textContent = '$' + xhr.response[i].price;
     $div3.appendChild($p);
 
+    var $div6 = document.createElement('div');
+    $div6.className = 'column-full heart-div';
+    $div1.appendChild($div6);
+
+    var $button = document.createElement('button');
+    $button.className = 'heart-list';
+    $div6.appendChild($button);
+
     $i = document.createElement('i');
-    $i.className = 'fa-regular fa-heart heart-list';
-    $div1.appendChild($i);
+    $i.className = 'fa-regular fa-heart';
+    $i.setAttribute('data-heart-id', i + 1);
+    $button.appendChild($i);
 
     // manipulating name and description data
     var stringName = xhr.response[i].name.slice(10);
@@ -169,9 +178,18 @@ function renderData() {
       }
     }
 
+    $div6 = document.createElement('div');
+    $div6.className = 'column-full heart-div';
+    $div3.appendChild($div6);
+
+    $button = document.createElement('button');
+    $button.className = 'heart-desktop-button';
+    $div6.appendChild($button);
+
     $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart heart-desktop';
-    $div3.appendChild($i);
+    $i.setAttribute('data-heart-id', i + 1);
+    $button.appendChild($i);
 
     var $div4 = document.createElement('div');
     $div4.className = 'row description';
@@ -229,9 +247,18 @@ function renderData() {
     $img.setAttribute('src', xhr.response[i].api_featured_image);
     $div2.appendChild($img);
 
+    $div6 = document.createElement('div');
+    $div6.className = 'column-full heart-div';
+    $div2.appendChild($div6);
+
+    $button = document.createElement('button');
+    $button.className = 'heart-mobile-button';
+    $div6.appendChild($button);
+
     $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart heart-mobile';
-    $div2.appendChild($i);
+    $i.setAttribute('data-heart-id', i + 1);
+    $button.appendChild($i);
 
     $div3 = document.createElement('div');
     $div3.className = 'row';
@@ -303,9 +330,17 @@ function handleClick(event) {
   var $li = document.querySelectorAll('.single-product');
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
+  var $heart = document.querySelectorAll('.fa-heart');
   data.view = 'description';
-  if (event.target.tagName === 'I') {
+
+  if (event.target.className.includes('fa-heart')) {
     event.target.classList = 'fa-solid fa-heart heart-list';
+    for (var j = 0; j < $heart.length; j++) {
+      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
+        $heart[j].classList.remove('fa-regular');
+        $heart[j].classList.add('fa-solid');
+      }
+    }
   } else {
     for (var i = 0; i < $li.length; i++) {
       if (window.matchMedia('(min-width: 376px)').matches) {
@@ -337,13 +372,27 @@ $desktop.addEventListener('click', handleClickDesktop);
 $mobile.addEventListener('click', handleClickMobile);
 
 function handleClickDesktop() {
-  if (event.target.tagName === 'I') {
+  var $heart = document.querySelectorAll('.fa-heart');
+  if (event.target.className.includes('fa-heart')) {
     event.target.className = 'fa-solid fa-heart heart-desktop';
+    for (var j = 0; j < $heart.length; j++) {
+      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
+        $heart[j].classList.remove('fa-regular');
+        $heart[j].classList.add('fa-solid');
+      }
+    }
   }
 }
 
 function handleClickMobile() {
-  if (event.target.tagName === 'I') {
+  var $heart = document.querySelectorAll('.fa-heart');
+  if (event.target.className.includes('fa-heart')) {
     event.target.className = 'fa-solid fa-heart heart-mobile';
+    for (var j = 0; j < $heart.length; j++) {
+      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
+        $heart[j].classList.remove('fa-regular');
+        $heart[j].classList.add('fa-solid');
+      }
+    }
   }
 }

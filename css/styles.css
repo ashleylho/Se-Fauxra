@@ -105,8 +105,17 @@ img {
 .fa-heart {
   font-size: 1.5rem;
   width: 100%;
+}
+
+.heart-div {
   text-align: right;
-  padding-right: 0.5rem;
+}
+
+button {
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  text-align: right;
 }
 
 /* styling for desktop version of product info/description */
@@ -114,6 +123,14 @@ img {
 .description {
   width: 75%;
   margin: 0 auto;
+}
+
+.heart-desktop-button {
+  /* /* display: flex; */
+
+  /* justify-content: flex-end; */
+
+  /* width: 100%; */
 }
 
 .product-basics {
