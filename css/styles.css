@@ -235,6 +235,10 @@ h3 {
 }
 
 /* wishlist */
+.wishlist {
+  margin-left: 1.25rem;
+}
+
 .wishlist-header {
   margin: 0;
   font-size: 1.75rem;
