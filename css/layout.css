@@ -46,4 +46,16 @@
   .mobile {
     display: block;
   }
+
+  .wishlist {
+    margin: 0;
+  }
+
+  .wishlist-ul {
+    justify-content: center;
+  }
+
+  .wishlist-item {
+    width: 95%;
+  }
 }

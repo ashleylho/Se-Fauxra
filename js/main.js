@@ -25,6 +25,8 @@ function loadData(event) {
 $form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
+  var $productDetailsLi = document.querySelectorAll('.single-product-details-desktop');
+  var $productDetailsLiM = document.querySelectorAll('.single-product-details-mobile');
   event.preventDefault();
   var $product = document.querySelectorAll('.single-product');
   var text = $search.value.toLowerCase();
@@ -35,6 +37,8 @@ function handleSubmit(event) {
     } else {
       $product[i].classList.add('hidden');
     }
+    $productDetailsLi[i].classList.add('hidden');
+    $productDetailsLiM[i].classList.add('hidden');
   }
   data.view = 'search';
 }
@@ -333,6 +337,8 @@ function handleClick(event) {
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
   var $heart = document.querySelectorAll('.fa-heart');
+  var $wishlistUl = document.querySelector('.wishlist-ul');
+  var $p = document.querySelector('.wishlist-none');
   data.view = 'description';
 
   if (event.target.className.includes('fa-heart')) {
@@ -344,9 +350,14 @@ function handleClick(event) {
       };
 
       if (event.target === $heart[j]) {
+        $p.classList.add('hidden');
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
+        var $wishlistItem = closestId.cloneNode(true);
+        $wishlistItem.className = 'column-half single-product wishlist-item';
+        $wishlistUl.appendChild($wishlistItem);
       }
+
       if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
         $heart.forEach(function () {
           $heart[j].classList.remove('fa-regular');
@@ -358,6 +369,8 @@ function handleClick(event) {
     for (var i = 0; i < $li.length; i++) {
       if ($li[i] === closestId) {
         $li[i].classList.add('hidden');
+        $desktop.classList.remove('hidden');
+        $mobile.classList.remove('hidden');
         $liDescription[i].classList.remove('hidden');
         $liDescriptionM[i].classList.remove('hidden');
         $list.classList.add('hidden');
@@ -430,8 +443,14 @@ function viewSwap(event) {
   if (event.target === $searchLink) {
     $wishlist.classList.add('hidden');
     $searchDiv.classList.remove('hidden');
+    $list.classList.remove('hidden');
+    $desktop.classList.remove('hidden');
+    $mobile.classList.remove('hidden');
   } else if (event.target === $wishlistLink) {
     $searchDiv.classList.add('hidden');
     $wishlist.classList.remove('hidden');
+    $list.classList.add('hidden');
+    $desktop.classList.add('hidden');
+    $mobile.classList.add('hidden');
   }
 }

@@ -235,12 +235,15 @@ h3 {
 }
 
 /* wishlist */
-.wishlist {
-  margin-left: 1.25rem;
+
+.wishlist-ul {
+  margin: 0 auto;
+  width: 100%;
 }
 
 .wishlist-header {
-  margin: 0;
+  margin-top: 1.5rem;
+  margin-left: 1.5rem;
   font-size: 1.75rem;
   text-transform: uppercase;
 }
