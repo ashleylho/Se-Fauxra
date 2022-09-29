@@ -102,6 +102,22 @@ img {
   padding: 0.75rem;
 }
 
+.fa-heart {
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.heart-div {
+  text-align: right;
+}
+
+button {
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  text-align: right;
+}
+
 /* styling for desktop version of product info/description */
 .img-product-info,
 .description {
@@ -148,10 +164,15 @@ h3 {
   font-weight: 500;
 }
 
+.heart-desktop {
+  margin-top: 15rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
 /* styling for mobile */
 .img-mobile {
   width: 65%;
-  margin-bottom: 1rem;
 }
 
 .h2-mobile {
@@ -191,4 +212,9 @@ h3 {
   display: inline-block;
   margin-top: 0.3rem;
   margin-bottom: 0.6rem;
+}
+
+.heart-mobile {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
 }

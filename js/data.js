@@ -7,7 +7,8 @@
 var data = {
   view: 'search',
   products: [],
-  wishlist: []
+  wishlist: [],
+  nextWishlistId: 1
 };
 
 window.addEventListener('beforeunload', beforeUnload);
