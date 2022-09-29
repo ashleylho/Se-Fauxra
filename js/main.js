@@ -28,8 +28,6 @@ function handleSubmit(event) {
     if (text === $product[i].dataset.productType) {
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
-      $mobile.classList.add('hidden');
-      $desktop.classList.add('hidden');
     } else {
       $product[i].classList.add('hidden');
     }
@@ -354,26 +352,15 @@ function handleClick(event) {
     }
   } else {
     for (var i = 0; i < $li.length; i++) {
-      if (window.matchMedia('(min-width: 376px)').matches) {
-        if ($li[i] === closestId) {
-          $desktop.classList.remove('hidden');
-          $li[i].classList.add('hidden');
-          $liDescription[i].classList.remove('hidden');
-          $list.classList.add('hidden');
-        } else {
-          $li[i].classList.add('hidden');
-          $liDescription[i].classList.add('hidden');
-        }
+      if ($li[i] === closestId) {
+        $li[i].classList.add('hidden');
+        $liDescription[i].classList.remove('hidden');
+        $liDescriptionM[i].classList.remove('hidden');
+        $list.classList.add('hidden');
       } else {
-        if ($li[i] === closestId) {
-          $mobile.classList.remove('hidden');
-          $li[i].classList.add('hidden');
-          $liDescriptionM[i].classList.remove('hidden');
-          $list.classList.add('hidden');
-        } else {
-          $li[i].classList.add('hidden');
-          $liDescriptionM[i].classList.add('hidden');
-        }
+        $li[i].classList.add('hidden');
+        $liDescription[i].classList.add('hidden');
+        $liDescriptionM[i].classList.add('hidden');
       }
     }
   }
