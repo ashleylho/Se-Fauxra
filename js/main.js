@@ -10,6 +10,8 @@ var $searchLink = document.querySelector('.search-link');
 var $wishlistLink = document.querySelector('.wishlist-link');
 var $wishlist = document.querySelector('.wishlist');
 var $searchDiv = document.querySelector('.search-div');
+var $wishlistUl = document.querySelector('.wishlist-ul');
+var $p = document.querySelector('.wishlist-none');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -337,8 +339,7 @@ function handleClick(event) {
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
   var $heart = document.querySelectorAll('.fa-heart');
-  var $wishlistUl = document.querySelector('.wishlist-ul');
-  var $p = document.querySelector('.wishlist-none');
+
   data.view = 'description';
 
   if (event.target.className.includes('fa-heart')) {
@@ -354,7 +355,7 @@ function handleClick(event) {
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
         var $wishlistItem = closestId.cloneNode(true);
-        $wishlistItem.className = 'column-half single-product wishlist-item';
+        $wishlistItem.className = 'column-half single-product-w wishlist-item';
         $wishlistUl.appendChild($wishlistItem);
       }
 
@@ -388,6 +389,7 @@ $mobile.addEventListener('click', handleClickMobile);
 
 function handleClickDesktop() {
   var $heart = document.querySelectorAll('.fa-heart');
+  var $singleProduct = document.querySelectorAll('.single-product');
   if (event.target.className.includes('fa-heart')) {
     event.target.className = 'fa-solid fa-heart heart-desktop';
     for (var j = 0; j < $heart.length; j++) {
@@ -397,8 +399,16 @@ function handleClickDesktop() {
       };
 
       if (event.target === $heart[j]) {
+        $p.classList.add('hidden');
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
+        for (var i = 0; i < $singleProduct.length; i++) {
+          if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
+            var $wishlistItem = $singleProduct[i].cloneNode(true);
+            $wishlistItem.className = 'column-half single-product-w wishlist-item';
+            $wishlistUl.appendChild($wishlistItem);
+          }
+        }
       }
 
       if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
