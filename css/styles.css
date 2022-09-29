@@ -233,3 +233,10 @@ h3 {
   font-size: 1.75rem;
   margin-bottom: 0.75rem;
 }
+
+/* wishlist */
+.wishlist-header {
+  margin: 0;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+}
