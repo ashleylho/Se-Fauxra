@@ -336,9 +336,20 @@ function handleClick(event) {
   if (event.target.className.includes('fa-heart')) {
     event.target.classList = 'fa-solid fa-heart heart-list';
     for (var j = 0; j < $heart.length; j++) {
+      var newObject = {
+        product: data.products[j],
+        wishlistId: data.nextWishlistId
+      };
+
+      if (event.target === $heart[j]) {
+        data.wishlist.unshift(newObject);
+        data.nextWishlistId++;
+      }
       if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart[j].classList.remove('fa-regular');
-        $heart[j].classList.add('fa-solid');
+        $heart.forEach(function () {
+          $heart[j].classList.remove('fa-regular');
+          $heart[j].classList.add('fa-solid');
+        });
       }
     }
   } else {
@@ -376,9 +387,21 @@ function handleClickDesktop() {
   if (event.target.className.includes('fa-heart')) {
     event.target.className = 'fa-solid fa-heart heart-desktop';
     for (var j = 0; j < $heart.length; j++) {
+      var newObject = {
+        product: data.products[event.target.dataset.heartId - 1],
+        wishlistId: data.nextWishlistId
+      };
+
+      if (event.target === $heart[j]) {
+        data.wishlist.unshift(newObject);
+        data.nextWishlistId++;
+      }
+
       if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart[j].classList.remove('fa-regular');
-        $heart[j].classList.add('fa-solid');
+        $heart.forEach(function () {
+          $heart[j].classList.remove('fa-regular');
+          $heart[j].classList.add('fa-solid');
+        });
       }
     }
   }
@@ -389,9 +412,21 @@ function handleClickMobile() {
   if (event.target.className.includes('fa-heart')) {
     event.target.className = 'fa-solid fa-heart heart-mobile';
     for (var j = 0; j < $heart.length; j++) {
+      var newObject = {
+        product: data.products[event.target.dataset.heartId - 1],
+        wishlistId: data.nextWishlistId
+      };
+
+      if (event.target === $heart[j]) {
+        data.wishlist.unshift(newObject);
+        data.nextWishlistId++;
+      }
+
       if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart[j].classList.remove('fa-regular');
-        $heart[j].classList.add('fa-solid');
+        $heart.forEach(function () {
+          $heart[j].classList.remove('fa-regular');
+          $heart[j].classList.add('fa-solid');
+        });
       }
     }
   }
