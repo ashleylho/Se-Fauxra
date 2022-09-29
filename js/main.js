@@ -95,7 +95,7 @@ function renderData() {
     $div3.appendChild($p);
 
     $i = document.createElement('i');
-    $i.className = 'fa-regular fa-heart';
+    $i.className = 'fa-regular fa-heart heart-list';
     $div1.appendChild($i);
 
     // manipulating name and description data
@@ -304,27 +304,46 @@ function handleClick(event) {
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
   data.view = 'description';
-  for (var i = 0; i < $li.length; i++) {
-    if (window.matchMedia('(min-width: 376px)').matches) {
-      if ($li[i] === closestId) {
-        $desktop.classList.remove('hidden');
-        $li[i].classList.add('hidden');
-        $liDescription[i].classList.remove('hidden');
-        $list.classList.add('hidden');
+  if (event.target.tagName === 'I') {
+    event.target.classList = 'fa-solid fa-heart heart-list';
+  } else {
+    for (var i = 0; i < $li.length; i++) {
+      if (window.matchMedia('(min-width: 376px)').matches) {
+        if ($li[i] === closestId) {
+          $desktop.classList.remove('hidden');
+          $li[i].classList.add('hidden');
+          $liDescription[i].classList.remove('hidden');
+          $list.classList.add('hidden');
+        } else {
+          $li[i].classList.add('hidden');
+          $liDescription[i].classList.add('hidden');
+        }
       } else {
-        $li[i].classList.add('hidden');
-        $liDescription[i].classList.add('hidden');
-      }
-    } else {
-      if ($li[i] === closestId) {
-        $mobile.classList.remove('hidden');
-        $li[i].classList.add('hidden');
-        $liDescriptionM[i].classList.remove('hidden');
-        $list.classList.add('hidden');
-      } else {
-        $li[i].classList.add('hidden');
-        $liDescriptionM[i].classList.add('hidden');
+        if ($li[i] === closestId) {
+          $mobile.classList.remove('hidden');
+          $li[i].classList.add('hidden');
+          $liDescriptionM[i].classList.remove('hidden');
+          $list.classList.add('hidden');
+        } else {
+          $li[i].classList.add('hidden');
+          $liDescriptionM[i].classList.add('hidden');
+        }
       }
     }
+  }
+}
+
+$desktop.addEventListener('click', handleClickDesktop);
+$mobile.addEventListener('click', handleClickMobile);
+
+function handleClickDesktop() {
+  if (event.target.tagName === 'I') {
+    event.target.className = 'fa-solid fa-heart heart-desktop';
+  }
+}
+
+function handleClickMobile() {
+  if (event.target.tagName === 'I') {
+    event.target.className = 'fa-solid fa-heart heart-mobile';
   }
 }

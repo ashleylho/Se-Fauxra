@@ -156,8 +156,9 @@ h3 {
 }
 
 .heart-desktop {
-  margin-top: 60%;
+  margin-top: 15rem;
   font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* styling for mobile */
