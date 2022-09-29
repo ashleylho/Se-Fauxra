@@ -423,6 +423,7 @@ function handleClickDesktop() {
 
 function handleClickMobile() {
   var $heart = document.querySelectorAll('.fa-heart');
+  var $singleProduct = document.querySelectorAll('.single-product');
   if (event.target.className.includes('fa-heart')) {
     event.target.className = 'fa-solid fa-heart heart-mobile';
     for (var j = 0; j < $heart.length; j++) {
@@ -432,8 +433,16 @@ function handleClickMobile() {
       };
 
       if (event.target === $heart[j]) {
+        $p.classList.add('hidden');
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
+        for (var i = 0; i < $singleProduct.length; i++) {
+          if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
+            var $wishlistItem = $singleProduct[i].cloneNode(true);
+            $wishlistItem.className = 'column-half single-product-w wishlist-item';
+            $wishlistUl.appendChild($wishlistItem);
+          }
+        }
       }
 
       if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
