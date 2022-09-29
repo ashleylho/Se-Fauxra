@@ -29,16 +29,19 @@
   </header>
   <main>
     <div class="container main-container">
-      <div class="row search-row">
-        <div class="column-full search-bar">
-          <span>
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <form>
-            <input type="search" class="search" id="search" placeholder="Search by product type">
-          </form>
+      <div class="search-div">
+        <div class="row search-row">
+          <div class="column-full search-bar">
+            <span>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <form>
+              <input type="search" class="search" id="search" placeholder="Search by product type">
+            </form>
+          </div>
         </div>
       </div>
+
       <div class="list">
         <ul id="product-list" class="row">
         </ul>
@@ -51,7 +54,7 @@
         <ul id="product-details-mobile" class="row">
         </ul>
       </div>
-      <div class="wishlist">
+      <div class="wishlist hidden">
         <div class="row">
           <div class="column-full">
             <h2 class="wishlist-header">Wishlist</h2>

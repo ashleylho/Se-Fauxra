@@ -6,6 +6,10 @@ var $productDetailsMobile = document.querySelector('#product-details-mobile');
 var $list = document.querySelector('.list');
 var $desktop = document.querySelector('.desktop');
 var $mobile = document.querySelector('.mobile');
+var $searchLink = document.querySelector('.search-link');
+var $wishlistLink = document.querySelector('.wishlist-link');
+var $wishlist = document.querySelector('.wishlist');
+var $searchDiv = document.querySelector('.search-div');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -416,5 +420,18 @@ function handleClickMobile() {
         });
       }
     }
+  }
+}
+
+$searchLink.addEventListener('click', viewSwap);
+$wishlistLink.addEventListener('click', viewSwap);
+
+function viewSwap(event) {
+  if (event.target === $searchLink) {
+    $wishlist.classList.add('hidden');
+    $searchDiv.classList.remove('hidden');
+  } else if (event.target === $wishlistLink) {
+    $searchDiv.classList.add('hidden');
+    $wishlist.classList.remove('hidden');
   }
 }
