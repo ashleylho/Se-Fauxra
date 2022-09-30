@@ -394,7 +394,7 @@ function renderData() {
 
     $i = document.createElement('i');
     $i.className = 'fa-solid fa-heart wishlist-heart';
-    $i.setAttribute('data-heart-id', k + 1);
+    $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
     $button.appendChild($i);
   }
 
@@ -435,7 +435,7 @@ function handleClick(event) {
       };
 
       if (event.target === $heart[j]) {
-        data.wishlist.unshift(newObject);
+        data.wishlist.push(newObject);
         data.nextWishlistId++;
         var $wishlistItem = closestId.cloneNode(true);
         $wishlistItem.className = 'column-half single-product-w';
@@ -486,7 +486,7 @@ function handleClickDescription() {
       };
 
       if (event.target === $heart[j]) {
-        data.wishlist.unshift(newObject);
+        data.wishlist.push(newObject);
         data.nextWishlistId++;
         for (var i = 0; i < $singleProduct.length; i++) {
           if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
@@ -540,4 +540,11 @@ document.addEventListener('DOMContentLoaded', renderData);
 $wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
+  var $heart = document.querySelectorAll('.wishlist-heart');
+  // console.log(event.target);
+  for (var i = 0; i < $heart.length; i++) {
+    if (event.target === $heart[i]) {
+      data.wishlist.splice(i, 1);
+    }
+  }
 }
