@@ -112,7 +112,7 @@ function renderData() {
     $div6.appendChild($button);
 
     $i = document.createElement('i');
-    $i.className = 'fa-regular fa-heart heart-list';
+    $i.className = 'fa-regular fa-heart';
     $i.setAttribute('data-heart-id', i + 1);
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
@@ -446,8 +446,8 @@ function handleClick(event) {
   data.view = 'description';
 
   if (event.target.className.includes('fa-heart')) {
-    event.target.classList = 'fa-solid fa-heart heart-list';
-
+    event.target.classList.add('fa-solid');
+    event.target.classList.remove('fa-regular');
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[j],
@@ -499,7 +499,6 @@ function handleClickDescription() {
     } else {
       event.target.className = 'fa-solid fa-heart heart-mobile';
     }
-
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[event.target.dataset.heartId - 1],
@@ -564,14 +563,14 @@ function handleWishlist(event) {
   var closest = event.target.closest('li');
   for (var i = 0; i < $heart.length; i++) {
     if (event.target === $heart[i]) {
+      data.wishlist.splice(i, 1);
+      closest.remove();
       for (var j = 0; j < $allHearts.length; j++) {
         if ($heart[i].dataset.apiId === $allHearts[j].dataset.apiId) {
           $allHearts[j].classList.remove('fa-solid');
           $allHearts[j].classList.add('fa-regular');
         }
       }
-      data.wishlist.splice(i, 1);
-      closest.remove();
     }
   }
   if (data.wishlist.length === 0) {
