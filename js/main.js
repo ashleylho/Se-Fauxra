@@ -407,6 +407,7 @@ function handleClickDesktop() {
             var $wishlistItem = $singleProduct[i].cloneNode(true);
             $wishlistItem.className = 'column-half single-product-w wishlist-item';
             $wishlistUl.appendChild($wishlistItem);
+            $wishlistUl.prepend($wishlistItem);
           }
         }
       }
@@ -473,3 +474,5 @@ function viewSwap(event) {
     $mobile.classList.add('hidden');
   }
 }
+
+// document.addEventListener('DOMContentLoaded');
