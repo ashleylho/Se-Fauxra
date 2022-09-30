@@ -43,6 +43,7 @@ function handleSubmit(event) {
     $productDetailsLiM[i].classList.add('hidden');
   }
   data.view = 'search';
+  $form.reset();
 }
 
 function renderData() {
