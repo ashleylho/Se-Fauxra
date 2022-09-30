@@ -11,6 +11,7 @@ var $wishlistLink = document.querySelector('.wishlist-link');
 var $wishlist = document.querySelector('.wishlist');
 var $searchDiv = document.querySelector('.search-div');
 var $wishlistUl = document.querySelector('.wishlist-ul');
+var $p = document.querySelector('.wishlist-none');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -519,13 +520,6 @@ function viewSwap(event) {
     $mobile.classList.remove('hidden');
     data.view = 'search';
   } else if (event.target === $wishlistLink) {
-    if (data.wishlist.length === 0) {
-      var $none = document.querySelector('.none-header');
-      var $p = document.createElement('p');
-      $p.className = 'wishlist-none';
-      $p.textContent = 'There are no products currently on your wishlist.';
-      $none.appendChild($p);
-    }
     $searchDiv.classList.add('hidden');
     $wishlist.classList.remove('hidden');
     $list.classList.add('hidden');
@@ -541,10 +535,22 @@ $wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
   var $heart = document.querySelectorAll('.wishlist-heart');
-  // console.log(event.target);
+  var closest = event.target.closest('li');
   for (var i = 0; i < $heart.length; i++) {
     if (event.target === $heart[i]) {
       data.wishlist.splice(i, 1);
+      closest.remove();
     }
   }
+  if (data.wishlist.length === 0) {
+    $p.classList.remove('hidden');
+  } else {
+    $p.classList.add('hidden');
+  }
+}
+
+if (data.wishlist.length === 0) {
+  $p.classList.remove('hidden');
+} else {
+  $p.classList.add('hidden');
 }
