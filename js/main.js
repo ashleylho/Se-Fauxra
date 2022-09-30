@@ -393,7 +393,7 @@ function renderData() {
     $div6.appendChild($button);
 
     $i = document.createElement('i');
-    $i.className = 'fa-solid fa-heart';
+    $i.className = 'fa-solid fa-heart wishlist-heart';
     $i.setAttribute('data-heart-id', k + 1);
     $button.appendChild($i);
   }
@@ -536,3 +536,8 @@ function viewSwap(event) {
 }
 
 document.addEventListener('DOMContentLoaded', renderData);
+
+$wishlist.addEventListener('click', handleWishlist);
+
+function handleWishlist(event) {
+}
