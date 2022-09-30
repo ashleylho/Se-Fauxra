@@ -21,7 +21,7 @@ xhr.send();
 
 function loadData(event) {
   data.products = xhr.response;
-  renderData();
+  // renderData();
 }
 
 $form.addEventListener('submit', handleSubmit);
@@ -46,12 +46,12 @@ function handleSubmit(event) {
 }
 
 function renderData() {
-  for (var i = 0; i < xhr.response.length; i++) {
+  for (var i = 0; i < data.products.length; i++) {
     // product list
     var $li = document.createElement('li');
     $li.className = 'column-third hidden single-product';
     $li.setAttribute('data-product-id', i + 1);
-    $li.setAttribute('data-product-type', xhr.response[i].product_type);
+    $li.setAttribute('data-product-type', data.products[i].product_type);
     $productList.appendChild($li);
 
     var $div = document.createElement('div');
@@ -67,7 +67,7 @@ function renderData() {
     $div1.appendChild($div2);
 
     var $img = document.createElement('img');
-    $img.setAttribute('src', xhr.response[i].api_featured_image);
+    $img.setAttribute('src', data.products[i].api_featured_image);
     $div2.appendChild($img);
 
     var $div3 = document.createElement('div');
@@ -75,18 +75,18 @@ function renderData() {
     $div1.appendChild($div3);
 
     var $h4 = document.createElement('h4');
-    $h4.textContent = xhr.response[i].name;
+    $h4.textContent = data.products[i].name;
     $div3.appendChild($h4);
 
     var $span = document.createElement('span');
     $div3.appendChild($span);
 
     for (var j = 0; j < 5; j++) {
-      if (j + 0.5 <= xhr.response[i].rating && xhr.response[i].rating < (j + 1)) {
+      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
         var $i = document.createElement('i');
         $i.className = 'fa-solid fa-star-half-stroke';
         $span.appendChild($i);
-      } else if (j < xhr.response[i].rating && j + 0.5 < xhr.response[i].rating) {
+      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
         $i = document.createElement('i');
         $i.className = 'fa-solid fa-star';
         $span.appendChild($i);
@@ -99,7 +99,7 @@ function renderData() {
 
     var $p = document.createElement('p');
     $p.className = 'p-search';
-    $p.textContent = '$' + xhr.response[i].price;
+    $p.textContent = '$' + data.products[i].price;
     $div3.appendChild($p);
 
     var $div6 = document.createElement('div');
@@ -116,19 +116,19 @@ function renderData() {
     $button.appendChild($i);
 
     // manipulating name and description data
-    var stringName = xhr.response[i].name.slice(10);
-    var indexOf = xhr.response[i].description.toLowerCase().indexOf('for best results');
+    var stringName = data.products[i].name.slice(10);
+    var indexOf = data.products[i].description.toLowerCase().indexOf('for best results');
     if (indexOf > 0) {
-      var description = xhr.response[i].description.slice(0, indexOf);
+      var description = data.products[i].description.slice(0, indexOf);
     } else {
-      description = xhr.response[i].description;
+      description = data.products[i].description;
     }
 
-    var colon = xhr.response[i].description.indexOf(':');
+    var colon = data.products[i].description.indexOf(':');
     if (colon > 0) {
-      var bestResultsHeader = xhr.response[i].description.slice(indexOf, colon + 1);
+      var bestResultsHeader = data.products[i].description.slice(indexOf, colon + 1);
     }
-    var bestResultsDescription = xhr.response[i].description.slice(colon + 1);
+    var bestResultsDescription = data.products[i].description.slice(colon + 1);
 
     // desktop dom
     $li = document.createElement('li');
@@ -145,7 +145,7 @@ function renderData() {
     $div1.appendChild($div2);
 
     $img = document.createElement('img');
-    $img.setAttribute('src', xhr.response[i].api_featured_image);
+    $img.setAttribute('src', data.products[i].api_featured_image);
     $img.className = 'desktop-img';
     $div2.appendChild($img);
 
@@ -164,18 +164,18 @@ function renderData() {
 
     $p = document.createElement('p');
     $p.className = 'price-desktop';
-    $p.textContent = '$' + xhr.response[i].price;
+    $p.textContent = '$' + data.products[i].price;
     $div3.appendChild($p);
 
     $span = document.createElement('span');
     $div3.appendChild($span);
 
     for (j = 0; j < 5; j++) {
-      if (j + 0.5 <= xhr.response[i].rating && xhr.response[i].rating < (j + 1)) {
+      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
         $i = document.createElement('i');
         $i.className = 'fa-solid fa-star-half-stroke';
         $span.appendChild($i);
-      } else if (j < xhr.response[i].rating && j + 0.5 < xhr.response[i].rating) {
+      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
         $i = document.createElement('i');
         $i.className = 'fa-solid fa-star';
         $span.appendChild($i);
@@ -216,7 +216,7 @@ function renderData() {
     $2ndp.className = 'p-description';
     $div5.appendChild($2ndp);
 
-    if (xhr.response[i].description.toLowerCase().includes('for best results')) {
+    if (data.products[i].description.toLowerCase().includes('for best results')) {
       var $3rdh3 = document.createElement('h3');
       $3rdh3.textContent = bestResultsHeader;
       $div5.appendChild($3rdh3);
@@ -252,7 +252,7 @@ function renderData() {
 
     $img = document.createElement('img');
     $img.className = 'img-mobile';
-    $img.setAttribute('src', xhr.response[i].api_featured_image);
+    $img.setAttribute('src', data.products[i].api_featured_image);
     $div2.appendChild($img);
 
     $div6 = document.createElement('div');
@@ -286,11 +286,11 @@ function renderData() {
     $div4.appendChild($span);
 
     for (j = 0; j < 5; j++) {
-      if (j + 0.5 <= xhr.response[i].rating && xhr.response[i].rating < (j + 1)) {
+      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
         $i = document.createElement('i');
         $i.className = 'fa-solid fa-star-half-stroke';
         $span.appendChild($i);
-      } else if (j < xhr.response[i].rating && j + 0.5 < xhr.response[i].rating) {
+      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
         $i = document.createElement('i');
         $i.className = 'fa-solid fa-star';
         $span.appendChild($i);
@@ -303,7 +303,7 @@ function renderData() {
 
     $p = document.createElement('p');
     $p.className = 'p-description-mobile';
-    $p.textContent = '$' + xhr.response[i].price;
+    $p.textContent = '$' + data.products[i].price;
     $div4.appendChild($p);
 
     $2ndh3 = document.createElement('h3');
@@ -316,7 +316,7 @@ function renderData() {
     $2ndp.className = 'p-description-mobile';
     $div4.appendChild($2ndp);
 
-    if (xhr.response[i].description.toLowerCase().includes('for best results')) {
+    if (data.products[i].description.toLowerCase().includes('for best results')) {
       $3rdh3 = document.createElement('h3');
       $3rdh3.className = 'h3-description-mobile';
       $3rdh3.textContent = bestResultsHeader;
@@ -327,7 +327,76 @@ function renderData() {
       $3rdp.className = 'p-description-mobile';
       $div4.appendChild($3rdp);
     }
+  }
 
+  // wishlist
+  for (var k = 0; k < data.wishlist.length; k++) {
+    $li = document.createElement('li');
+    $li.className = 'column-third single-product-w';
+    $li.setAttribute('data-product-id', k + 1);
+    $li.setAttribute('data-product-type', data.wishlist[k].product.product_type);
+    $wishlistUl.appendChild($li);
+
+    $div = document.createElement('div');
+    $div.className = 'border-div';
+    $li.appendChild($div);
+
+    $div1 = document.createElement('div');
+    $div1.className = 'row product';
+    $div.appendChild($div1);
+
+    $div2 = document.createElement('div');
+    $div2.className = 'column-half';
+    $div1.appendChild($div2);
+
+    $img = document.createElement('img');
+    $img.setAttribute('src', data.wishlist[k].product.api_featured_image);
+    $div2.appendChild($img);
+
+    $div3 = document.createElement('div');
+    $div3.className = 'column-half info';
+    $div1.appendChild($div3);
+
+    $h4 = document.createElement('h4');
+    $h4.textContent = data.wishlist[k].product.name;
+    $div3.appendChild($h4);
+
+    $span = document.createElement('span');
+    $div3.appendChild($span);
+
+    for (var q = 0; q < 5; q++) {
+      if (q + 0.5 <= data.wishlist[k].product.rating && data.wishlist[k].product.rating < (q + 1)) {
+        $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star-half-stroke';
+        $span.appendChild($i);
+      } else if (q < data.wishlist[k].product.rating && q + 0.5 < data.wishlist[k].product.rating) {
+        $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star';
+        $span.appendChild($i);
+      } else {
+        $i = document.createElement('i');
+        $i.className = 'fa-regular fa-star';
+        $span.appendChild($i);
+      }
+    }
+
+    $p = document.createElement('p');
+    $p.className = 'p-search';
+    $p.textContent = '$' + data.wishlist[k].product.price;
+    $div3.appendChild($p);
+
+    $div6 = document.createElement('div');
+    $div6.className = 'column-full heart-div';
+    $div1.appendChild($div6);
+
+    $button = document.createElement('button');
+    $button.className = 'heart-list';
+    $div6.appendChild($button);
+
+    $i = document.createElement('i');
+    $i.className = 'fa-solid fa-heart';
+    $i.setAttribute('data-heart-id', k + 1);
+    $button.appendChild($i);
   }
 }
 
@@ -351,7 +420,6 @@ function handleClick(event) {
       };
 
       if (event.target === $heart[j]) {
-        $p.classList.add('hidden');
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
         var $wishlistItem = closestId.cloneNode(true);
@@ -399,7 +467,6 @@ function handleClickDesktop() {
       };
 
       if (event.target === $heart[j]) {
-        $p.classList.add('hidden');
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
         for (var i = 0; i < $singleProduct.length; i++) {
@@ -434,7 +501,6 @@ function handleClickMobile() {
       };
 
       if (event.target === $heart[j]) {
-        $p.classList.add('hidden');
         data.wishlist.unshift(newObject);
         data.nextWishlistId++;
         for (var i = 0; i < $singleProduct.length; i++) {
@@ -466,13 +532,18 @@ function viewSwap(event) {
     $list.classList.remove('hidden');
     $desktop.classList.remove('hidden');
     $mobile.classList.remove('hidden');
+    data.view = 'search';
   } else if (event.target === $wishlistLink) {
+    if (data.wishlist.length > 0) {
+      $p.classList.add('hidden');
+    }
     $searchDiv.classList.add('hidden');
     $wishlist.classList.remove('hidden');
     $list.classList.add('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
+    data.view = 'wishlist';
   }
 }
 
-// document.addEventListener('DOMContentLoaded');
+document.addEventListener('DOMContentLoaded', renderData);
