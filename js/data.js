@@ -1,8 +1,4 @@
 /* exported data */
-// var xhr = new XMLHttpRequest();
-// xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
-// xhr.responseType = 'json';
-// xhr.send();
 
 var data = {
   view: 'search',
