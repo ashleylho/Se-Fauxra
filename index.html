@@ -17,22 +17,28 @@
   <header>
     <div class="container">
       <div class="row">
-        <div class="column-full">
+        <div class="column-half">
           <h1>SE'FAUXRA</h1>
+        </div>
+        <div class="column-half anchors">
+          <a href="#" class="search-link">Search</a>
+          <a href="#" class="wishlist-link">Wishlist</a>
         </div>
       </div>
     </div>
   </header>
   <main>
     <div class="container main-container">
-      <div class="row search-row">
-        <div class="column-full search-bar">
-          <span>
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <form>
-            <input type="search" class="search" id="search" placeholder="Search by product type">
-          </form>
+      <div class="search-div">
+        <div class="row search-row">
+          <div class="column-full search-bar">
+            <span>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <form>
+              <input type="search" class="search" id="search" placeholder="Search by product type">
+            </form>
+          </div>
         </div>
       </div>
       <div class="list">
@@ -46,6 +52,18 @@
       <div class="mobile">
         <ul id="product-details-mobile" class="row">
         </ul>
+      </div>
+      <div class="wishlist hidden">
+        <div class="row">
+          <div class="column-full">
+            <h2 class="wishlist-header">Wishlist</h2>
+          </div>
+          <div class="column-full none-header">
+          </div>
+        </div>
+        <div class="wishlist-items">
+          <ul class=" row wishlist-ul"></ul>
+        </div>
       </div>
     </div>
   </main>
