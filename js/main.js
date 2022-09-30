@@ -53,6 +53,7 @@ function renderData() {
     $li.className = 'column-third hidden single-product';
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-product-type', data.products[i].product_type);
+    $li.setAttribute('data-api-id', data.products[i].id);
     $productList.appendChild($li);
 
     var $div = document.createElement('div');
@@ -108,12 +109,12 @@ function renderData() {
     $div1.appendChild($div6);
 
     var $button = document.createElement('button');
-    $button.className = 'heart-list';
     $div6.appendChild($button);
 
     $i = document.createElement('i');
-    $i.className = 'fa-regular fa-heart';
+    $i.className = 'fa-regular fa-heart heart-list';
     $i.setAttribute('data-heart-id', i + 1);
+    $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
     // manipulating name and description data
@@ -135,6 +136,7 @@ function renderData() {
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-desktop hidden';
+    $li.setAttribute('data-api-id', data.products[i].id);
     $productDetails.appendChild($li);
 
     $div1 = document.createElement('div');
@@ -198,6 +200,7 @@ function renderData() {
     $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart heart-desktop';
     $i.setAttribute('data-heart-id', i + 1);
+    $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
     var $div4 = document.createElement('div');
@@ -230,6 +233,7 @@ function renderData() {
     // mobile dom
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
+    $li.setAttribute('data-api-id', data.products[i].id);
     $li.className = 'single-product-details-mobile hidden';
     $productDetailsMobile.appendChild($li);
 
@@ -267,6 +271,7 @@ function renderData() {
     $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart heart-mobile';
     $i.setAttribute('data-heart-id', i + 1);
+    $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
     $div3 = document.createElement('div');
@@ -334,7 +339,7 @@ function renderData() {
   for (var k = 0; k < data.wishlist.length; k++) {
     $li = document.createElement('li');
     $li.className = 'column-half single-product-w';
-    $li.setAttribute('data-product-id', k + 1);
+    $li.setAttribute('data-api-id', data.wishlist[k].product.id);
     $li.setAttribute('data-product-type', data.wishlist[k].product.product_type);
     $wishlistUl.appendChild($li);
 
@@ -391,12 +396,12 @@ function renderData() {
     $div1.appendChild($div6);
 
     $button = document.createElement('button');
-    $button.className = 'heart-list';
     $div6.appendChild($button);
 
     $i = document.createElement('i');
     $i.className = 'fa-solid fa-heart wishlist-heart';
     $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
+    $i.setAttribute('data-api-id', data.wishlist[k].product.id);
     $button.appendChild($i);
   }
 
@@ -414,6 +419,18 @@ function renderData() {
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
     data.view = 'wishlist';
+  } else if (data.view === 'description') {
+    data.view = 'description';
+    $desktop.classList.remove('hidden');
+  }
+  for (var r = 0; r < data.wishlist.length; r++) {
+    var $hearts = document.querySelectorAll('.fa-heart');
+    for (var g = 0; g < $hearts.length; g++) {
+      if (data.wishlist[r].product.id === Number($hearts[g].dataset.apiId)) {
+        $hearts[g].classList.remove('fa-regular');
+        $hearts[g].classList.add('fa-solid');
+      }
+    }
   }
 }
 
@@ -521,6 +538,11 @@ function viewSwap(event) {
     $wishlist.classList.add('hidden');
     data.view = 'search';
   } else if (event.target === $wishlistLink) {
+    if (data.wishlist.length === 0) {
+      $p.classList.remove('hidden');
+    } else {
+      $p.classList.add('hidden');
+    }
     $searchDiv.classList.add('hidden');
     $wishlist.classList.remove('hidden');
     $list.classList.add('hidden');
@@ -536,9 +558,16 @@ $wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
   var $heart = document.querySelectorAll('.wishlist-heart');
+  var $allHearts = document.querySelectorAll('.fa-heart');
   var closest = event.target.closest('li');
   for (var i = 0; i < $heart.length; i++) {
     if (event.target === $heart[i]) {
+      for (var j = 0; j < $allHearts.length; j++) {
+        if ($heart[i].dataset.apiId === $allHearts[j].dataset.apiId) {
+          $allHearts[j].classList.remove('fa-solid');
+          $allHearts[j].classList.add('fa-regular');
+        }
+      }
       data.wishlist.splice(i, 1);
       closest.remove();
     }
