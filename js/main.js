@@ -447,6 +447,7 @@ function handleClick(event) {
 
   if (event.target.className.includes('fa-heart')) {
     event.target.classList = 'fa-solid fa-heart heart-list';
+
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[j],
@@ -498,6 +499,7 @@ function handleClickDescription() {
     } else {
       event.target.className = 'fa-solid fa-heart heart-mobile';
     }
+
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[event.target.dataset.heartId - 1],
