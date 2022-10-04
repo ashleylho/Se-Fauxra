@@ -47,7 +47,6 @@ function handleSubmit(event) {
 
 function renderData() {
   for (var i = 0; i < data.products.length; i++) {
-    // product list
     var $li = document.createElement('li');
     $li.className = 'column-third hidden single-product';
     $li.setAttribute('data-product-id', i + 1);
@@ -130,7 +129,6 @@ function renderData() {
     }
     var bestResultsDescription = data.products[i].description.slice(colon + 1);
 
-    // desktop dom
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-desktop hidden';
@@ -228,7 +226,7 @@ function renderData() {
       $3rdp.className = 'p-description';
       $div5.appendChild($3rdp);
     }
-    // mobile dom
+
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-api-id', data.products[i].id);
