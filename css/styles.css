@@ -140,6 +140,9 @@ button {
 
 .product-basics {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .desktop-img {
@@ -178,7 +181,6 @@ h3 {
 }
 
 .heart-desktop {
-  margin-top: 15rem;
   font-size: 2rem;
   margin-bottom: 1rem;
 }

@@ -152,22 +152,25 @@ function renderData() {
     $div3.className = 'column-half product-basics';
     $div1.appendChild($div3);
 
+    var $div7 = document.createElement('div');
+    $div3.appendChild($div7);
+
     var $h2 = document.createElement('h2');
     $h2.textContent = 'Maybelline';
-    $div3.appendChild($h2);
+    $div7.appendChild($h2);
 
     var $h3 = document.createElement('h3');
     $h3.className = 'h3-product-basics';
     $h3.textContent = stringName;
-    $div3.appendChild($h3);
+    $div7.appendChild($h3);
 
     $p = document.createElement('p');
     $p.className = 'price-desktop';
     $p.textContent = '$' + data.products[i].price;
-    $div3.appendChild($p);
+    $div7.appendChild($p);
 
     $span = document.createElement('span');
-    $div3.appendChild($span);
+    $div7.appendChild($span);
 
     for (j = 0; j < 5; j++) {
       if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
