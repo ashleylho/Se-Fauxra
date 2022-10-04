@@ -21,7 +21,6 @@ xhr.send();
 
 function loadData(event) {
   data.products = xhr.response;
-  // renderData();
 }
 
 $form.addEventListener('submit', handleSubmit);
@@ -117,7 +116,6 @@ function renderData() {
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
-    // manipulating name and description data
     var stringName = data.products[i].name.slice(10);
     var indexOf = data.products[i].description.toLowerCase().indexOf('for best results');
     if (indexOf > 0) {
