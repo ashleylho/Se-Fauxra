@@ -21,7 +21,6 @@ xhr.send();
 
 function loadData(event) {
   data.products = xhr.response;
-  // renderData();
 }
 
 $form.addEventListener('submit', handleSubmit);
@@ -48,7 +47,6 @@ function handleSubmit(event) {
 
 function renderData() {
   for (var i = 0; i < data.products.length; i++) {
-    // product list
     var $li = document.createElement('li');
     $li.className = 'column-third hidden single-product';
     $li.setAttribute('data-product-id', i + 1);
@@ -117,7 +115,6 @@ function renderData() {
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
-    // manipulating name and description data
     var stringName = data.products[i].name.slice(10);
     var indexOf = data.products[i].description.toLowerCase().indexOf('for best results');
     if (indexOf > 0) {
@@ -132,7 +129,6 @@ function renderData() {
     }
     var bestResultsDescription = data.products[i].description.slice(colon + 1);
 
-    // desktop dom
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-desktop hidden';
@@ -230,7 +226,7 @@ function renderData() {
       $3rdp.className = 'p-description';
       $div5.appendChild($3rdp);
     }
-    // mobile dom
+
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-api-id', data.products[i].id);
@@ -335,75 +331,7 @@ function renderData() {
     }
   }
 
-  // wishlist
-  for (var k = 0; k < data.wishlist.length; k++) {
-    $li = document.createElement('li');
-    $li.className = 'column-half single-product-w';
-    $li.setAttribute('data-api-id', data.wishlist[k].product.id);
-    $li.setAttribute('data-product-type', data.wishlist[k].product.product_type);
-    $wishlistUl.appendChild($li);
-
-    $div = document.createElement('div');
-    $div.className = 'border-div';
-    $li.appendChild($div);
-
-    $div1 = document.createElement('div');
-    $div1.className = 'row product';
-    $div.appendChild($div1);
-
-    $div2 = document.createElement('div');
-    $div2.className = 'column-half';
-    $div1.appendChild($div2);
-
-    $img = document.createElement('img');
-    $img.setAttribute('src', data.wishlist[k].product.api_featured_image);
-    $div2.appendChild($img);
-
-    $div3 = document.createElement('div');
-    $div3.className = 'column-half info';
-    $div1.appendChild($div3);
-
-    $h4 = document.createElement('h4');
-    $h4.textContent = data.wishlist[k].product.name;
-    $div3.appendChild($h4);
-
-    $span = document.createElement('span');
-    $div3.appendChild($span);
-
-    for (var q = 0; q < 5; q++) {
-      if (q + 0.5 <= data.wishlist[k].product.rating && data.wishlist[k].product.rating < (q + 1)) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (q < data.wishlist[k].product.rating && q + 0.5 < data.wishlist[k].product.rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
-
-    $p = document.createElement('p');
-    $p.className = 'p-search';
-    $p.textContent = '$' + data.wishlist[k].product.price;
-    $div3.appendChild($p);
-
-    $div6 = document.createElement('div');
-    $div6.className = 'column-full heart-div';
-    $div1.appendChild($div6);
-
-    $button = document.createElement('button');
-    $div6.appendChild($button);
-
-    $i = document.createElement('i');
-    $i.className = 'fa-solid fa-heart wishlist-heart';
-    $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
-    $i.setAttribute('data-api-id', data.wishlist[k].product.id);
-    $button.appendChild($i);
-  }
+  wishlist();
 
   if (data.view === 'search') {
     $wishlist.classList.add('hidden');
@@ -504,10 +432,10 @@ function handleClickDescription() {
         product: data.products[event.target.dataset.heartId - 1],
         wishlistId: data.nextWishlistId
       };
-
       if (event.target === $heart[j]) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
+
         for (var i = 0; i < $singleProduct.length; i++) {
           if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
             var $wishlistItem = $singleProduct[i].cloneNode(true);
@@ -559,20 +487,24 @@ $wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
   var $heart = document.querySelectorAll('.wishlist-heart');
+  var $li = document.querySelectorAll('.single-product-w');
   var $allHearts = document.querySelectorAll('.fa-heart');
   var closest = event.target.closest('li');
-  for (var i = 0; i < $heart.length; i++) {
-    if (event.target === $heart[i]) {
+  for (var i = 0; i < $li.length; i++) {
+    if (closest === $li[i]) {
       data.wishlist.splice(i, 1);
       closest.remove();
-      for (var j = 0; j < $allHearts.length; j++) {
-        if ($heart[i].dataset.apiId === $allHearts[j].dataset.apiId) {
-          $allHearts[j].classList.remove('fa-solid');
-          $allHearts[j].classList.add('fa-regular');
-        }
+    }
+  }
+  for (var k = 0; k < $heart.length; k++) {
+    for (var j = 0; j < $allHearts.length; j++) {
+      if ($heart[k].dataset.apiId === $allHearts[j].dataset.apiId) {
+        $allHearts[j].classList.remove('fa-solid');
+        $allHearts[j].classList.add('fa-regular');
       }
     }
   }
+
   if (data.wishlist.length === 0) {
     $p.classList.remove('hidden');
   } else {
@@ -584,4 +516,75 @@ if (data.wishlist.length === 0) {
   $p.classList.remove('hidden');
 } else {
   $p.classList.add('hidden');
+}
+
+function wishlist() {
+  for (var k = 0; k < data.wishlist.length; k++) {
+    var $li = document.createElement('li');
+    $li.className = 'column-half single-product-w';
+    $li.setAttribute('data-api-id', data.wishlist[k].product.id);
+    $li.setAttribute('data-product-type', data.wishlist[k].product.product_type);
+    $wishlistUl.appendChild($li);
+
+    var $div = document.createElement('div');
+    $div.className = 'border-div';
+    $li.appendChild($div);
+
+    var $div1 = document.createElement('div');
+    $div1.className = 'row product';
+    $div.appendChild($div1);
+
+    var $div2 = document.createElement('div');
+    $div2.className = 'column-half';
+    $div1.appendChild($div2);
+
+    var $img = document.createElement('img');
+    $img.setAttribute('src', data.wishlist[k].product.api_featured_image);
+    $div2.appendChild($img);
+
+    var $div3 = document.createElement('div');
+    $div3.className = 'column-half info';
+    $div1.appendChild($div3);
+
+    var $h4 = document.createElement('h4');
+    $h4.textContent = data.wishlist[k].product.name;
+    $div3.appendChild($h4);
+
+    var $span = document.createElement('span');
+    $div3.appendChild($span);
+
+    for (var q = 0; q < 5; q++) {
+      if (q + 0.5 <= data.wishlist[k].product.rating && data.wishlist[k].product.rating < (q + 1)) {
+        var $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star-half-stroke';
+        $span.appendChild($i);
+      } else if (q < data.wishlist[k].product.rating && q + 0.5 < data.wishlist[k].product.rating) {
+        $i = document.createElement('i');
+        $i.className = 'fa-solid fa-star';
+        $span.appendChild($i);
+      } else {
+        $i = document.createElement('i');
+        $i.className = 'fa-regular fa-star';
+        $span.appendChild($i);
+      }
+    }
+
+    var $p = document.createElement('p');
+    $p.className = 'p-search';
+    $p.textContent = '$' + data.wishlist[k].product.price;
+    $div3.appendChild($p);
+
+    var $div6 = document.createElement('div');
+    $div6.className = 'column-full heart-div';
+    $div1.appendChild($div6);
+
+    var $button = document.createElement('button');
+    $div6.appendChild($button);
+
+    $i = document.createElement('i');
+    $i.className = 'fa-solid fa-heart wishlist-heart';
+    $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
+    $i.setAttribute('data-api-id', data.wishlist[k].product.id);
+    $button.appendChild($i);
+  }
 }

@@ -1,6 +1,5 @@
 .hidden {
   display: none;
-  height: 0;
 }
 
 .container {
@@ -43,14 +42,6 @@
 @media only screen and (max-width: 375px) {
   .desktop {
     display: none;
-  }
-
-  .wishlist {
-    margin: 0;
-  }
-
-  .wishlist-ul {
-    justify-content: center;
   }
 
   .wishlist-item {
