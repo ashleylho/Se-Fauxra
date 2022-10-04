@@ -44,10 +44,6 @@
     display: none;
   }
 
-  .wishlist-item {
-    width: 95%;
-  }
-
   .wishlist-none {
     margin-right: 1.5rem;
     line-height: 1.5rem;

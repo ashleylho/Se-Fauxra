@@ -25,6 +25,17 @@ a {
   margin-right: 2rem;
 }
 
+a,
+button,
+.fa-heart,
+.product {
+  cursor: pointer;
+}
+
+a:hover {
+  text-shadow: rgb(227, 238, 235) 0.5px 0.5px;
+}
+
 .anchors {
   text-align: right;
   padding-right: 1.5rem;
