@@ -481,6 +481,10 @@ function viewSwap(event) {
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
     data.view = 'wishlist';
+    var $descriptions = document.querySelectorAll('.single-product-details-desktop');
+    for (var q = 0; q < $descriptions.length; q++) {
+      $descriptions[q].classList.add('hidden');
+    }
   }
 }
 
