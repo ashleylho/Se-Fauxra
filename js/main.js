@@ -369,12 +369,12 @@ function handleClick(event) {
 
   if (event.target.className.includes('fa-heart')) {
     hearts();
-    for (var j = 0; j < $heart.length; j++) {
+    for (var j = 0; j < data.products.length; j++) {
       var newObject = {
         product: data.products[j],
+        apiId: data.products[j].id,
         wishlistId: data.nextWishlistId
       };
-
       if (event.target === $heart[j]) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
@@ -416,12 +416,12 @@ function handleClickDescription() {
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[event.target.dataset.heartId - 1],
+        apiId: data.products[event.target.dataset.heartId - 1].id,
         wishlistId: data.nextWishlistId
       };
       if (event.target === $heart[j]) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
-
         for (var i = 0; i < $singleProduct.length; i++) {
           if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
             var $wishlistItem = $singleProduct[i].cloneNode(true);
