@@ -354,15 +354,6 @@ function renderData() {
     data.view = 'description';
     $desktop.classList.remove('hidden');
   }
-  for (var r = 0; r < data.wishlist.length; r++) {
-    var $hearts = document.querySelectorAll('.fa-heart');
-    for (var g = 0; g < $hearts.length; g++) {
-      if (data.wishlist[r].product.id === Number($hearts[g].dataset.apiId)) {
-        $hearts[g].classList.remove('fa-regular');
-        $hearts[g].classList.add('fa-solid');
-      }
-    }
-  }
 }
 
 $productList.addEventListener('click', handleClick);
@@ -447,13 +438,7 @@ function handleClickDescription() {
           }
         }
       }
-
-      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart.forEach(function () {
-          $heart[j].classList.remove('fa-regular');
-          $heart[j].classList.add('fa-solid');
-        });
-      }
+      hearts();
     }
   }
 }
@@ -493,24 +478,15 @@ document.addEventListener('DOMContentLoaded', renderData);
 $wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
-  var $heart = document.querySelectorAll('.wishlist-heart');
   var $li = document.querySelectorAll('.single-product-w');
-  var $allHearts = document.querySelectorAll('.fa-heart');
   var closest = event.target.closest('li');
   for (var i = 0; i < $li.length; i++) {
-    if (closest === $li[i]) {
+    if (event.target.tagName === 'I' && closest === $li[i]) {
       data.wishlist.splice(i, 1);
       closest.remove();
     }
   }
-  for (var k = 0; k < $heart.length; k++) {
-    for (var j = 0; j < $allHearts.length; j++) {
-      if ($heart[k].dataset.apiId === $allHearts[j].dataset.apiId) {
-        $allHearts[j].classList.remove('fa-solid');
-        $allHearts[j].classList.add('fa-regular');
-      }
-    }
-  }
+  hearts();
 
   if (data.wishlist.length === 0) {
     $p.classList.remove('hidden');
@@ -593,5 +569,22 @@ function wishlist() {
     $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
     $i.setAttribute('data-api-id', data.wishlist[k].product.id);
     $button.appendChild($i);
+  }
+}
+
+function hearts() {
+  var $allHearts = document.querySelectorAll('.fa-heart');
+  if (event.target.matches('.fa-heart')) {
+    for (var i = 0; i < $allHearts.length; i++) {
+      if (event.target.dataset.apiId === $allHearts[i].dataset.apiId) {
+        if (event.target.classList.contains('fa-regular')) {
+          $allHearts[i].classList.remove('fa-regular');
+          $allHearts[i].classList.add('fa-solid');
+        } else if (event.target.classList.contains('fa-solid')) {
+          $allHearts[i].classList.add('fa-regular');
+          $allHearts[i].classList.remove('fa-solid');
+        }
+      }
+    }
   }
 }
