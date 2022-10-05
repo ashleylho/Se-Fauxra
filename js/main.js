@@ -368,8 +368,7 @@ function handleClick(event) {
   data.view = 'description';
 
   if (event.target.className.includes('fa-heart')) {
-    event.target.classList.add('fa-solid');
-    event.target.classList.remove('fa-regular');
+    hearts();
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[j],
@@ -382,13 +381,6 @@ function handleClick(event) {
         var $wishlistItem = closestId.cloneNode(true);
         $wishlistItem.className = 'column-half single-product-w';
         $wishlistUl.appendChild($wishlistItem);
-      }
-
-      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart.forEach(function () {
-          $heart[j].classList.remove('fa-regular');
-          $heart[j].classList.add('fa-solid');
-        });
       }
     }
   } else {
@@ -480,13 +472,19 @@ $wishlist.addEventListener('click', handleWishlist);
 function handleWishlist(event) {
   var $li = document.querySelectorAll('.single-product-w');
   var closest = event.target.closest('li');
+  var $allHearts = document.querySelectorAll('.fa-heart');
   for (var i = 0; i < $li.length; i++) {
     if (event.target.tagName === 'I' && closest === $li[i]) {
       data.wishlist.splice(i, 1);
       closest.remove();
+      for (var j = 0; j < $allHearts.length; j++) {
+        if (event.target.dataset.apiId === $allHearts[j].dataset.apiId) {
+          $allHearts[j].classList.remove('fa-solid');
+          $allHearts[j].classList.add('fa-regular');
+        }
+      }
     }
   }
-  hearts();
 
   if (data.wishlist.length === 0) {
     $p.classList.remove('hidden');
@@ -577,13 +575,8 @@ function hearts() {
   if (event.target.matches('.fa-heart')) {
     for (var i = 0; i < $allHearts.length; i++) {
       if (event.target.dataset.apiId === $allHearts[i].dataset.apiId) {
-        if (event.target.classList.contains('fa-regular')) {
-          $allHearts[i].classList.remove('fa-regular');
-          $allHearts[i].classList.add('fa-solid');
-        } else if (event.target.classList.contains('fa-solid')) {
-          $allHearts[i].classList.add('fa-regular');
-          $allHearts[i].classList.remove('fa-solid');
-        }
+        $allHearts[i].classList.remove('fa-regular');
+        $allHearts[i].classList.add('fa-solid');
       }
     }
   }
