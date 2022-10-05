@@ -425,7 +425,7 @@ function handleClickDescription() {
   var $heart = document.querySelectorAll('.fa-heart');
   var $singleProduct = document.querySelectorAll('.single-product');
   if (event.target.className.includes('fa-heart')) {
-    if (window.matchMedia('(min-width: 376px)').matches) {
+    if (window.matchMedia('(min-width: 768px)').matches) {
       event.target.className = 'fa-solid fa-heart heart-desktop';
     } else {
       event.target.className = 'fa-solid fa-heart heart-mobile';

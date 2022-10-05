@@ -18,11 +18,11 @@ h1 {
 }
 
 a {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: white;
   text-transform: uppercase;
   text-decoration: none;
-  margin-right: 2rem;
+  padding-right: 2rem;
 }
 
 a,
@@ -120,6 +120,7 @@ img {
 
 .fa-heart {
   font-size: 1.5rem;
+  color: black;
 }
 
 .heart-div {
