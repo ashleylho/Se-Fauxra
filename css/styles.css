@@ -350,3 +350,27 @@ h3 {
     transform: scale(1.5);
   }
 }
+
+/* .background {
+  background-color: rgba(139, 173, 196, 0.9);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+} */
+
+.modal {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  text-align: center;
+
+  /* border: solid #2c3333; */
+
+  /* border-radius: 5px; */
+  padding: 1rem;
+  width: 40%;
+}
