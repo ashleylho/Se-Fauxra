@@ -36,6 +36,47 @@ a:hover {
   text-shadow: rgb(227, 238, 235) 0.5px 0.5px;
 }
 
+h2 {
+  margin: 0.25rem auto;
+  font-size: 2rem;
+}
+
+h3 {
+  margin: 0.5rem 0;
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  margin-right: 2px;
+}
+
+input:focus {
+  outline: none;
+}
+
+form {
+  width: 100%;
+}
+
+img {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  padding-right: 5px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+button {
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
 .anchors {
   text-align: right;
   padding-right: 1.5rem;
@@ -55,10 +96,6 @@ a:hover {
   display: flex;
 }
 
-form {
-  width: 100%;
-}
-
 .search {
   border: none;
   background-color: #e7f6f2;
@@ -67,19 +104,10 @@ form {
   font-size: 1.25rem;
 }
 
-input:focus {
-  outline: none;
-}
-
 .fa-magnifying-glass {
   font-size: 1.3rem;
   padding: 12px;
   margin-left: 5px;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
 }
 
 .border-div {
@@ -92,12 +120,6 @@ ul {
   border: 1.5px solid #395b64;
 }
 
-h4 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  margin-right: 2px;
-}
-
 .info {
   padding-left: 5px;
 }
@@ -105,13 +127,6 @@ h4 {
 .p-search {
   margin-top: 10px;
   margin-bottom: 0;
-}
-
-img {
-  display: block;
-  width: 80%;
-  margin: 0 auto;
-  padding-right: 5px;
 }
 
 .product {
@@ -125,12 +140,6 @@ img {
 
 .heart-div {
   text-align: right;
-}
-
-button {
-  border: none;
-  border-radius: 50%;
-  background-color: transparent;
 }
 
 .img-product-info,
@@ -160,15 +169,6 @@ button {
   border-radius: 5px;
   padding: 1.25rem;
   margin-bottom: 2rem;
-}
-
-h2 {
-  margin: 0.25rem auto;
-  font-size: 2rem;
-}
-
-h3 {
-  margin: 0.5rem 0;
 }
 
 .p-description {
