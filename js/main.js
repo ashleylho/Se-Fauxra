@@ -91,24 +91,7 @@ function renderData() {
     $h4.textContent = data.products[i].name;
     $div3.appendChild($h4);
 
-    var $span = document.createElement('span');
-    $div3.appendChild($span);
-
-    for (var j = 0; j < 5; j++) {
-      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
-        var $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div3.appendChild(rating(data.products[i].rating));
 
     var $p = document.createElement('p');
     $p.className = 'p-search';
@@ -122,7 +105,7 @@ function renderData() {
     var $button = document.createElement('button');
     $div6.appendChild($button);
 
-    $i = document.createElement('i');
+    var $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart';
     $i.setAttribute('data-heart-id', i + 1);
     $i.setAttribute('data-api-id', data.products[i].id);
@@ -196,24 +179,7 @@ function renderData() {
     $p.textContent = '$' + data.products[i].price;
     $div7.appendChild($p);
 
-    $span = document.createElement('span');
-    $div7.appendChild($span);
-
-    for (j = 0; j < 5; j++) {
-      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div7.appendChild(rating(data.products[i].rating));
 
     $div6 = document.createElement('div');
     $div6.className = 'column-full heart-div';
@@ -313,25 +279,7 @@ function renderData() {
     $2ndh3.textContent = 'About The Product:';
     $div4.appendChild($2ndh3);
 
-    $span = document.createElement('span');
-    $span.className = 'span-mobile';
-    $div4.appendChild($span);
-
-    for (j = 0; j < 5; j++) {
-      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div4.appendChild(rating(data.products[i].rating));
 
     $p = document.createElement('p');
     $p.className = 'p-description-mobile';
@@ -559,24 +507,7 @@ function wishlist() {
     $h4.textContent = data.wishlist[k].product.name;
     $div3.appendChild($h4);
 
-    var $span = document.createElement('span');
-    $div3.appendChild($span);
-
-    for (var q = 0; q < 5; q++) {
-      if (q + 0.5 <= data.wishlist[k].product.rating && data.wishlist[k].product.rating < (q + 1)) {
-        var $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (q < data.wishlist[k].product.rating && q + 0.5 < data.wishlist[k].product.rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div3.appendChild(rating(data.wishlist[k].product.rating));
 
     var $p = document.createElement('p');
     $p.className = 'p-search';
@@ -590,7 +521,7 @@ function wishlist() {
     var $button = document.createElement('button');
     $div6.appendChild($button);
 
-    $i = document.createElement('i');
+    var $i = document.createElement('i');
     $i.className = 'fa-solid fa-heart wishlist-heart';
     $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
     $i.setAttribute('data-api-id', data.wishlist[k].product.id);
@@ -608,4 +539,24 @@ function hearts() {
       }
     }
   }
+}
+
+function rating(rating) {
+  var $span = document.createElement('span');
+  for (var j = 0; j < 5; j++) {
+    if (j + 0.5 <= rating && rating < (j + 1)) {
+      var $i = document.createElement('i');
+      $i.className = 'fa-solid fa-star-half-stroke';
+      $span.appendChild($i);
+    } else if (j < rating && j + 0.5 < rating) {
+      $i = document.createElement('i');
+      $i.className = 'fa-solid fa-star';
+      $span.appendChild($i);
+    } else {
+      $i = document.createElement('i');
+      $i.className = 'fa-regular fa-star';
+      $span.appendChild($i);
+    }
+  }
+  return $span;
 }
