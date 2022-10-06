@@ -12,7 +12,7 @@ var $wishlist = document.querySelector('.wishlist');
 var $searchDiv = document.querySelector('.search-div');
 var $wishlistUl = document.querySelector('.wishlist-ul');
 var $p = document.querySelector('.wishlist-none');
-var $modal = document.querySelector('.modal');
+var $oops = document.querySelector('.oops');
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
@@ -40,7 +40,7 @@ function handleSubmit(event) {
   var text = $search.value.toLowerCase();
   for (var i = 0; i < $product.length; i++) {
     if (text === $product[i].dataset.productType) {
-      $modal.classList.add('hidden');
+      $oops.classList.add('hidden');
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
     } else {
@@ -51,7 +51,7 @@ function handleSubmit(event) {
   }
   var categories = ['eyeshadow', 'bronzer', 'blush', 'foundation', 'eyeliner', 'lipstick', 'mascara'];
   if (!categories.includes(text)) {
-    $modal.classList.remove('hidden');
+    $oops.classList.remove('hidden');
   }
 
   data.view = 'search';
@@ -470,7 +470,7 @@ function viewSwap(event) {
     $list.classList.add('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
-    $modal.classList.add('hidden');
+    $oops.classList.add('hidden');
     data.view = 'wishlist';
     var $descriptions = document.querySelectorAll('.single-product-details-desktop');
     for (var q = 0; q < $descriptions.length; q++) {

@@ -351,26 +351,14 @@ h3 {
   }
 }
 
-/* .background {
-  background-color: rgba(139, 173, 196, 0.9);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-} */
-
-.modal {
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+.oops {
   text-align: center;
-
-  /* border: solid #2c3333; */
-
-  /* border-radius: 5px; */
   padding: 1rem;
-  width: 40%;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.oops-header {
+  font-weight: 400;
+  font-size: 1.2rem;
 }
