@@ -136,11 +136,25 @@ function renderData() {
       description = data.products[i].description;
     }
 
-    var colon = data.products[i].description.indexOf(':');
-    if (colon > 0) {
-      var bestResultsHeader = data.products[i].description.slice(indexOf, colon + 1);
+    if (description.includes("Why You'll Love It")) {
+      description = description.replace("Why You'll Love It", "Why You'll Love It: ");
     }
-    var bestResultsDescription = data.products[i].description.slice(colon + 1);
+    var indexFeatures = data.products[i].description.toLowerCase().indexOf('features');
+    if (description.includes('Features')) {
+      description = description.slice(0, indexFeatures);
+    }
+
+    var colon = data.products[i].description.indexOf('s:');
+    if (colon > 0) {
+      var bestResultsHeader = 'For Best Results:';
+    }
+    var bestResultsDescription = data.products[i].description.slice(colon + 2);
+
+    if (bestResultsDescription.includes('results')) {
+      var noColon = bestResultsDescription.indexOf('results');
+      bestResultsDescription = bestResultsDescription.slice(noColon + 8);
+      bestResultsDescription = bestResultsDescription.charAt(0).toUpperCase() + bestResultsDescription.slice(1);
+    }
 
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
