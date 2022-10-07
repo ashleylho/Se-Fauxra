@@ -18,7 +18,13 @@ var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
 xhr.responseType = 'json';
 xhr.addEventListener('load', loadData);
+xhr.addEventListener('error', errorMessage);
 xhr.send();
+
+function errorMessage() {
+  var $error = document.querySelector('.error');
+  $error.classList.remove('hidden');
+}
 
 function loadData(event) {
   var $spinner = document.querySelector('.spinner');

@@ -351,14 +351,16 @@ button {
   }
 }
 
-.oops {
+.oops,
+.error {
   text-align: center;
   padding: 1rem;
   width: 80%;
   margin: 0 auto;
 }
 
-.oops-header {
+.oops-header,
+.error-header {
   font-weight: 400;
   font-size: 1.2rem;
 }
