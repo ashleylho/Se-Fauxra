@@ -20,6 +20,8 @@ $desktop.addEventListener('click', handleClickDescription);
 $mobile.addEventListener('click', handleClickDescription);
 $searchLink.addEventListener('click', viewSwap);
 $wishlistLink.addEventListener('click', viewSwap);
+document.addEventListener('DOMContentLoaded', renderData);
+$wishlist.addEventListener('click', handleWishlist);
 
 loadData();
 
@@ -43,8 +45,8 @@ function errorMessage() {
 }
 
 function handleSubmit(event) {
-  var $productDetailsLi = document.querySelectorAll('.single-product-details-desktop');
-  var $productDetailsLiM = document.querySelectorAll('.single-product-details-mobile');
+  var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
+  var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
   event.preventDefault();
   var $product = document.querySelectorAll('.single-product');
   var text = $search.value.toLowerCase();
@@ -56,8 +58,8 @@ function handleSubmit(event) {
     } else {
       $product[i].classList.add('hidden');
     }
-    $productDetailsLi[i].classList.add('hidden');
-    $productDetailsLiM[i].classList.add('hidden');
+    $productDetailsDesktop[i].classList.add('hidden');
+    $productDetailsMobile[i].classList.add('hidden');
   }
   var categories = ['eyeshadow', 'bronzer', 'blush', 'foundation', 'eyeliner', 'lipstick', 'mascara'];
   if (!categories.includes(text)) {
@@ -457,10 +459,6 @@ function viewSwap(event) {
     }
   }
 }
-
-document.addEventListener('DOMContentLoaded', renderData);
-
-$wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
   var $li = document.querySelectorAll('.single-product-w');
