@@ -361,9 +361,8 @@ function handleClick(event) {
       if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
-        var $wishlistItem = closestId.cloneNode(true);
-        $wishlistItem.className = 'column-half single-product-w';
-        $wishlistUl.appendChild($wishlistItem);
+
+        cloneProduct(closestId);
       }
     }
   } else {
@@ -382,6 +381,12 @@ function handleClick(event) {
       }
     }
   }
+}
+
+function cloneProduct(node) {
+  var $wishlistItem = node.cloneNode(true);
+  $wishlistItem.className = 'column-half single-product-w';
+  $wishlistUl.appendChild($wishlistItem);
 }
 
 function check(array, apiId) {
@@ -411,11 +416,10 @@ function handleClickDescription() {
       if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
+
         for (var i = 0; i < $singleProduct.length; i++) {
           if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
-            var $wishlistItem = $singleProduct[i].cloneNode(true);
-            $wishlistItem.className = 'column-half single-product-w';
-            $wishlistUl.appendChild($wishlistItem);
+            cloneProduct($singleProduct[i]);
           }
         }
       }
