@@ -345,18 +345,22 @@ function handleClick(event) {
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
   var $heart = document.querySelectorAll('.fa-heart');
+  var $apiId = event.target.dataset.apiId;
 
   data.view = 'description';
 
   if (event.target.className.includes('fa-heart')) {
     hearts();
+
+    // check(data.products, $apiId, closestId, $heart);
     for (var j = 0; j < data.products.length; j++) {
       var newObject = {
         product: data.products[j],
         apiId: data.products[j].id,
         wishlistId: data.nextWishlistId
       };
-      if (event.target === $heart[j]) {
+
+      if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
         var $wishlistItem = closestId.cloneNode(true);
@@ -382,12 +386,18 @@ function handleClick(event) {
   }
 }
 
+function check(array, apiId) {
+  var found = array.some(el => el.apiId === apiId);
+  return found;
+}
+
 $desktop.addEventListener('click', handleClickDescription);
 $mobile.addEventListener('click', handleClickDescription);
 
 function handleClickDescription() {
   var $heart = document.querySelectorAll('.fa-heart');
   var $singleProduct = document.querySelectorAll('.single-product');
+  var $apiId = event.target.dataset.apiId;
   if (event.target.className.includes('fa-heart')) {
     if (window.matchMedia('(min-width: 768px)').matches) {
       event.target.className = 'fa-solid fa-heart heart-desktop';
@@ -400,7 +410,7 @@ function handleClickDescription() {
         apiId: data.products[event.target.dataset.heartId - 1].id,
         wishlistId: data.nextWishlistId
       };
-      if (event.target === $heart[j]) {
+      if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
         for (var i = 0; i < $singleProduct.length; i++) {
