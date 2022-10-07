@@ -14,23 +14,33 @@ var $wishlistUl = document.querySelector('.wishlist-ul');
 var $p = document.querySelector('.wishlist-none');
 var $oops = document.querySelector('.oops');
 
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
-xhr.responseType = 'json';
-xhr.addEventListener('load', loadData);
-xhr.addEventListener('error', errorMessage);
-xhr.send();
+// var xhr = new XMLHttpRequest();
+// xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
+// xhr.responseType = 'json';
+// xhr.addEventListener('load', loadData);
+// xhr.addEventListener('error', errorMessage);
+// xhr.send();
+
+function loadData() {
+  var $spinner = document.querySelector('.spinner');
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
+  $spinner.classList.remove('hidden');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    $spinner.classList.add('hidden');
+    data.products = xhr.response;
+  });
+  xhr.addEventListener('error', errorMessage);
+  xhr.send();
+}
 
 function errorMessage() {
   var $error = document.querySelector('.error');
   $error.classList.remove('hidden');
 }
 
-function loadData(event) {
-  var $spinner = document.querySelector('.spinner');
-  $spinner.classList.add('hidden');
-  data.products = xhr.response;
-}
+loadData();
 
 $form.addEventListener('submit', handleSubmit);
 
