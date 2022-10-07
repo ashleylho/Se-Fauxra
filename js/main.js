@@ -45,25 +45,28 @@ function errorMessage() {
 }
 
 function handleSubmit(event) {
+  event.preventDefault();
   var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
   var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
-  event.preventDefault();
   var $product = document.querySelectorAll('.single-product');
-  var text = $search.value.toLowerCase();
+  var input = $search.value.toLowerCase();
+  var checkCount = 0;
   for (var i = 0; i < $product.length; i++) {
-    if (text === $product[i].dataset.productType) {
-      $oops.classList.add('hidden');
+
+    if (data.products[i].name.toLowerCase().includes(input) || data.products[i].product_type.toLowerCase().includes(input)) {
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
+      checkCount++;
     } else {
       $product[i].classList.add('hidden');
     }
     $productDetailsDesktop[i].classList.add('hidden');
     $productDetailsMobile[i].classList.add('hidden');
-  }
-  var categories = ['eyeshadow', 'bronzer', 'blush', 'foundation', 'eyeliner', 'lipstick', 'mascara'];
-  if (!categories.includes(text)) {
-    $oops.classList.remove('hidden');
+    if (checkCount > 0) {
+      $oops.classList.add('hidden');
+    } else {
+      $oops.classList.remove('hidden');
+    }
   }
 
   data.view = 'search';
@@ -389,7 +392,7 @@ function cloneProduct(node) {
   $wishlistUl.appendChild($wishlistItem);
 }
 
-function check(array, apiId) {
+function checkPresence(array, apiId) {
   var found = array.some(el => el.apiId === apiId);
   return found;
 }
@@ -401,7 +404,7 @@ function addWishlist(apiId, heart, closest, singleProduct) {
       apiId: data.products[j].id,
       wishlistId: data.nextWishlistId
     };
-    if (event.target.dataset.apiId === heart[j].dataset.apiId && check(data.wishlist, Number(apiId)) === false) {
+    if (event.target.dataset.apiId === heart[j].dataset.apiId && checkPresence(data.wishlist, Number(apiId)) === false) {
       data.wishlist.push(newObject);
       data.nextWishlistId++;
 
