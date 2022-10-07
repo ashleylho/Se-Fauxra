@@ -112,7 +112,7 @@ function renderData() {
 
     var $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart';
-    $i.setAttribute('data-heart-id', i + 1);
+    $i.setAttribute('data-heart-id', i);
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
@@ -196,7 +196,7 @@ function renderData() {
 
     $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart heart-desktop';
-    $i.setAttribute('data-heart-id', i + 1);
+    $i.setAttribute('data-heart-id', i);
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
@@ -267,7 +267,7 @@ function renderData() {
 
     $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart heart-mobile';
-    $i.setAttribute('data-heart-id', i + 1);
+    $i.setAttribute('data-heart-id', i);
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
@@ -334,6 +334,15 @@ function renderData() {
     data.view = 'description';
     $desktop.classList.remove('hidden');
   }
+  for (var k = 0; k < data.wishlist.length; k++) {
+    var $hearts = document.querySelectorAll('.fa-heart');
+    for (var q = 0; q < $hearts.length; q++) {
+      if (data.wishlist[k].apiId === Number($hearts[q].dataset.apiId)) {
+        $hearts[q].classList.remove('fa-regular');
+        $hearts[q].classList.add('fa-solid');
+      }
+    }
+  }
 }
 
 $productList.addEventListener('click', handleClick);
@@ -350,22 +359,7 @@ function handleClick(event) {
 
   if (event.target.className.includes('fa-heart')) {
     hearts();
-
-    for (var j = 0; j < data.products.length; j++) {
-      var newObject = {
-        product: data.products[j],
-        apiId: data.products[j].id,
-        wishlistId: data.nextWishlistId
-      };
-
-      if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
-        data.wishlist.push(newObject);
-        data.nextWishlistId++;
-        var $wishlistItem = closestId.cloneNode(true);
-        $wishlistItem.className = 'column-half single-product-w';
-        $wishlistUl.appendChild($wishlistItem);
-      }
-    }
+    addWishlist($apiId, $heart, closestId);
   } else {
     for (var i = 0; i < $li.length; i++) {
       if ($li[i] === closestId) {
@@ -384,9 +378,37 @@ function handleClick(event) {
   }
 }
 
+function cloneProduct(node) {
+  var $wishlistItem = node.cloneNode(true);
+  $wishlistItem.className = 'column-half single-product-w';
+  $wishlistUl.appendChild($wishlistItem);
+}
+
 function check(array, apiId) {
   var found = array.some(el => el.apiId === apiId);
   return found;
+}
+
+function addWishlist(apiId, heart, closest, singleProduct) {
+  for (var j = 0; j < data.products.length; j++) {
+    var newObject = {
+      product: data.products[j],
+      apiId: data.products[j].id,
+      wishlistId: data.nextWishlistId
+    };
+    if (event.target.dataset.apiId === heart[j].dataset.apiId && check(data.wishlist, Number(apiId)) === false) {
+      data.wishlist.push(newObject);
+      data.nextWishlistId++;
+
+      if (closest.className.includes('single-product-details-desktop') || closest.className.includes('single-product-details-mobile')) {
+        for (var i = 0; i < singleProduct.length; i++) {
+          if (singleProduct[i].dataset.apiId === heart[j].dataset.apiId) {
+            cloneProduct(singleProduct[i]);
+          }
+        }
+      } else cloneProduct(closest);
+    }
+  }
 }
 
 $desktop.addEventListener('click', handleClickDescription);
@@ -396,31 +418,15 @@ function handleClickDescription() {
   var $heart = document.querySelectorAll('.fa-heart');
   var $singleProduct = document.querySelectorAll('.single-product');
   var $apiId = event.target.dataset.apiId;
+  var closestId = event.target.closest('li');
   if (event.target.className.includes('fa-heart')) {
     if (window.matchMedia('(min-width: 768px)').matches) {
       event.target.className = 'fa-solid fa-heart heart-desktop';
     } else {
       event.target.className = 'fa-solid fa-heart heart-mobile';
     }
-    for (var j = 0; j < $heart.length; j++) {
-      var newObject = {
-        product: data.products[event.target.dataset.heartId - 1],
-        apiId: data.products[event.target.dataset.heartId - 1].id,
-        wishlistId: data.nextWishlistId
-      };
-      if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
-        data.wishlist.push(newObject);
-        data.nextWishlistId++;
-        for (var i = 0; i < $singleProduct.length; i++) {
-          if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
-            var $wishlistItem = $singleProduct[i].cloneNode(true);
-            $wishlistItem.className = 'column-half single-product-w';
-            $wishlistUl.appendChild($wishlistItem);
-          }
-        }
-      }
-      hearts();
-    }
+    hearts();
+    addWishlist($apiId, $heart, closestId, $singleProduct);
   }
 }
 
