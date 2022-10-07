@@ -334,6 +334,15 @@ function renderData() {
     data.view = 'description';
     $desktop.classList.remove('hidden');
   }
+  for (var k = 0; k < data.wishlist.length; k++) {
+    var $hearts = document.querySelectorAll('.fa-heart');
+    for (var q = 0; q < $hearts.length; q++) {
+      if (data.wishlist[k].apiId === Number($hearts[q].dataset.apiId)) {
+        $hearts[q].classList.remove('fa-regular');
+        $hearts[q].classList.add('fa-solid');
+      }
+    }
+  }
 }
 
 $productList.addEventListener('click', handleClick);
