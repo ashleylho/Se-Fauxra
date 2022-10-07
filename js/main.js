@@ -28,11 +28,7 @@ function errorMessage() {
 
 function loadData(event) {
   var $spinner = document.querySelector('.spinner');
-  if (xhr.readyState === 1) {
-    $spinner.classList.remove('hidden');
-  } else if (xhr.readyState === 4) {
-    $spinner.classList.add('hidden');
-  }
+  $spinner.classList.add('hidden');
   data.products = xhr.response;
 }
 
