@@ -14,6 +14,15 @@ var $wishlistUl = document.querySelector('.wishlist-ul');
 var $p = document.querySelector('.wishlist-none');
 var $oops = document.querySelector('.oops');
 
+$form.addEventListener('submit', handleSubmit);
+$productList.addEventListener('click', handleClick);
+$desktop.addEventListener('click', handleClickDescription);
+$mobile.addEventListener('click', handleClickDescription);
+$searchLink.addEventListener('click', viewSwap);
+$wishlistLink.addEventListener('click', viewSwap);
+
+loadData();
+
 function loadData() {
   var $spinner = document.querySelector('.spinner');
   var xhr = new XMLHttpRequest();
@@ -32,10 +41,6 @@ function errorMessage() {
   var $error = document.querySelector('.error');
   $error.classList.remove('hidden');
 }
-
-loadData();
-
-$form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   var $productDetailsLi = document.querySelectorAll('.single-product-details-desktop');
@@ -345,8 +350,6 @@ function renderData() {
   }
 }
 
-$productList.addEventListener('click', handleClick);
-
 function handleClick(event) {
   var closestId = event.target.closest('li');
   var $li = document.querySelectorAll('.single-product');
@@ -411,9 +414,6 @@ function addWishlist(apiId, heart, closest, singleProduct) {
   }
 }
 
-$desktop.addEventListener('click', handleClickDescription);
-$mobile.addEventListener('click', handleClickDescription);
-
 function handleClickDescription() {
   var $heart = document.querySelectorAll('.fa-heart');
   var $singleProduct = document.querySelectorAll('.single-product');
@@ -429,9 +429,6 @@ function handleClickDescription() {
     addWishlist($apiId, $heart, closestId, $singleProduct);
   }
 }
-
-$searchLink.addEventListener('click', viewSwap);
-$wishlistLink.addEventListener('click', viewSwap);
 
 function viewSwap(event) {
   if (event.target === $searchLink) {
@@ -481,18 +478,15 @@ function handleWishlist(event) {
       }
     }
   }
+  wishlistMessage();
+}
 
+function wishlistMessage() {
   if (data.wishlist.length === 0) {
     $p.classList.remove('hidden');
   } else {
     $p.classList.add('hidden');
   }
-}
-
-if (data.wishlist.length === 0) {
-  $p.classList.remove('hidden');
-} else {
-  $p.classList.add('hidden');
 }
 
 function wishlist() {
