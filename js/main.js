@@ -14,13 +14,6 @@ var $wishlistUl = document.querySelector('.wishlist-ul');
 var $p = document.querySelector('.wishlist-none');
 var $oops = document.querySelector('.oops');
 
-// var xhr = new XMLHttpRequest();
-// xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
-// xhr.responseType = 'json';
-// xhr.addEventListener('load', loadData);
-// xhr.addEventListener('error', errorMessage);
-// xhr.send();
-
 function loadData() {
   var $spinner = document.querySelector('.spinner');
   var xhr = new XMLHttpRequest();
