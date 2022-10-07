@@ -12,16 +12,28 @@ var $wishlist = document.querySelector('.wishlist');
 var $searchDiv = document.querySelector('.search-div');
 var $wishlistUl = document.querySelector('.wishlist-ul');
 var $p = document.querySelector('.wishlist-none');
+var $oops = document.querySelector('.oops');
 
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
-xhr.responseType = 'json';
-xhr.addEventListener('load', loadData);
-xhr.send();
-
-function loadData(event) {
-  data.products = xhr.response;
+function loadData() {
+  var $spinner = document.querySelector('.spinner');
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
+  $spinner.classList.remove('hidden');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    $spinner.classList.add('hidden');
+    data.products = xhr.response;
+  });
+  xhr.addEventListener('error', errorMessage);
+  xhr.send();
 }
+
+function errorMessage() {
+  var $error = document.querySelector('.error');
+  $error.classList.remove('hidden');
+}
+
+loadData();
 
 $form.addEventListener('submit', handleSubmit);
 
@@ -33,6 +45,7 @@ function handleSubmit(event) {
   var text = $search.value.toLowerCase();
   for (var i = 0; i < $product.length; i++) {
     if (text === $product[i].dataset.productType) {
+      $oops.classList.add('hidden');
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
     } else {
@@ -41,6 +54,11 @@ function handleSubmit(event) {
     $productDetailsLi[i].classList.add('hidden');
     $productDetailsLiM[i].classList.add('hidden');
   }
+  var categories = ['eyeshadow', 'bronzer', 'blush', 'foundation', 'eyeliner', 'lipstick', 'mascara'];
+  if (!categories.includes(text)) {
+    $oops.classList.remove('hidden');
+  }
+
   data.view = 'search';
   $form.reset();
 }
@@ -78,24 +96,7 @@ function renderData() {
     $h4.textContent = data.products[i].name;
     $div3.appendChild($h4);
 
-    var $span = document.createElement('span');
-    $div3.appendChild($span);
-
-    for (var j = 0; j < 5; j++) {
-      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
-        var $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div3.appendChild(rating(data.products[i].rating));
 
     var $p = document.createElement('p');
     $p.className = 'p-search';
@@ -109,7 +110,7 @@ function renderData() {
     var $button = document.createElement('button');
     $div6.appendChild($button);
 
-    $i = document.createElement('i');
+    var $i = document.createElement('i');
     $i.className = 'fa-regular fa-heart';
     $i.setAttribute('data-heart-id', i + 1);
     $i.setAttribute('data-api-id', data.products[i].id);
@@ -123,11 +124,25 @@ function renderData() {
       description = data.products[i].description;
     }
 
-    var colon = data.products[i].description.indexOf(':');
-    if (colon > 0) {
-      var bestResultsHeader = data.products[i].description.slice(indexOf, colon + 1);
+    if (description.includes("Why You'll Love It")) {
+      description = description.replace("Why You'll Love It", "Why You'll Love It: ");
     }
-    var bestResultsDescription = data.products[i].description.slice(colon + 1);
+    var indexFeatures = data.products[i].description.toLowerCase().indexOf('features');
+    if (description.includes('Features')) {
+      description = description.slice(0, indexFeatures);
+    }
+
+    var colon = data.products[i].description.indexOf('s:');
+    if (colon > 0) {
+      var bestResultsHeader = 'For Best Results:';
+    }
+    var bestResultsDescription = data.products[i].description.slice(colon + 2);
+
+    if (bestResultsDescription.includes('results')) {
+      var noColon = bestResultsDescription.indexOf('results');
+      bestResultsDescription = bestResultsDescription.slice(noColon + 8);
+      bestResultsDescription = bestResultsDescription.charAt(0).toUpperCase() + bestResultsDescription.slice(1);
+    }
 
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
@@ -152,38 +167,24 @@ function renderData() {
     $div3.className = 'column-half product-basics';
     $div1.appendChild($div3);
 
+    var $div7 = document.createElement('div');
+    $div3.appendChild($div7);
+
     var $h2 = document.createElement('h2');
     $h2.textContent = 'Maybelline';
-    $div3.appendChild($h2);
+    $div7.appendChild($h2);
 
     var $h3 = document.createElement('h3');
     $h3.className = 'h3-product-basics';
     $h3.textContent = stringName;
-    $div3.appendChild($h3);
+    $div7.appendChild($h3);
 
     $p = document.createElement('p');
     $p.className = 'price-desktop';
     $p.textContent = '$' + data.products[i].price;
-    $div3.appendChild($p);
+    $div7.appendChild($p);
 
-    $span = document.createElement('span');
-    $div3.appendChild($span);
-
-    for (j = 0; j < 5; j++) {
-      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div7.appendChild(rating(data.products[i].rating));
 
     $div6 = document.createElement('div');
     $div6.className = 'column-full heart-div';
@@ -283,25 +284,7 @@ function renderData() {
     $2ndh3.textContent = 'About The Product:';
     $div4.appendChild($2ndh3);
 
-    $span = document.createElement('span');
-    $span.className = 'span-mobile';
-    $div4.appendChild($span);
-
-    for (j = 0; j < 5; j++) {
-      if (j + 0.5 <= data.products[i].rating && data.products[i].rating < (j + 1)) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (j < data.products[i].rating && j + 0.5 < data.products[i].rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div4.appendChild(rating(data.products[i].rating));
 
     $p = document.createElement('p');
     $p.className = 'p-description-mobile';
@@ -351,15 +334,6 @@ function renderData() {
     data.view = 'description';
     $desktop.classList.remove('hidden');
   }
-  for (var r = 0; r < data.wishlist.length; r++) {
-    var $hearts = document.querySelectorAll('.fa-heart');
-    for (var g = 0; g < $hearts.length; g++) {
-      if (data.wishlist[r].product.id === Number($hearts[g].dataset.apiId)) {
-        $hearts[g].classList.remove('fa-regular');
-        $hearts[g].classList.add('fa-solid');
-      }
-    }
-  }
 }
 
 $productList.addEventListener('click', handleClick);
@@ -370,31 +344,26 @@ function handleClick(event) {
   var $liDescription = document.querySelectorAll('.single-product-details-desktop');
   var $liDescriptionM = document.querySelectorAll('.single-product-details-mobile');
   var $heart = document.querySelectorAll('.fa-heart');
+  var $apiId = event.target.dataset.apiId;
 
   data.view = 'description';
 
   if (event.target.className.includes('fa-heart')) {
-    event.target.classList.add('fa-solid');
-    event.target.classList.remove('fa-regular');
-    for (var j = 0; j < $heart.length; j++) {
+    hearts();
+
+    for (var j = 0; j < data.products.length; j++) {
       var newObject = {
         product: data.products[j],
+        apiId: data.products[j].id,
         wishlistId: data.nextWishlistId
       };
 
-      if (event.target === $heart[j]) {
+      if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
         var $wishlistItem = closestId.cloneNode(true);
         $wishlistItem.className = 'column-half single-product-w';
         $wishlistUl.appendChild($wishlistItem);
-      }
-
-      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart.forEach(function () {
-          $heart[j].classList.remove('fa-regular');
-          $heart[j].classList.add('fa-solid');
-        });
       }
     }
   } else {
@@ -415,14 +384,20 @@ function handleClick(event) {
   }
 }
 
+function check(array, apiId) {
+  var found = array.some(el => el.apiId === apiId);
+  return found;
+}
+
 $desktop.addEventListener('click', handleClickDescription);
 $mobile.addEventListener('click', handleClickDescription);
 
 function handleClickDescription() {
   var $heart = document.querySelectorAll('.fa-heart');
   var $singleProduct = document.querySelectorAll('.single-product');
+  var $apiId = event.target.dataset.apiId;
   if (event.target.className.includes('fa-heart')) {
-    if (window.matchMedia('(min-width: 376px)').matches) {
+    if (window.matchMedia('(min-width: 768px)').matches) {
       event.target.className = 'fa-solid fa-heart heart-desktop';
     } else {
       event.target.className = 'fa-solid fa-heart heart-mobile';
@@ -430,12 +405,12 @@ function handleClickDescription() {
     for (var j = 0; j < $heart.length; j++) {
       var newObject = {
         product: data.products[event.target.dataset.heartId - 1],
+        apiId: data.products[event.target.dataset.heartId - 1].id,
         wishlistId: data.nextWishlistId
       };
-      if (event.target === $heart[j]) {
+      if (event.target === $heart[j] && check(data.wishlist, Number($apiId)) === false) {
         data.wishlist.push(newObject);
         data.nextWishlistId++;
-
         for (var i = 0; i < $singleProduct.length; i++) {
           if ($singleProduct[i].dataset.productId === $heart[j].dataset.heartId) {
             var $wishlistItem = $singleProduct[i].cloneNode(true);
@@ -444,13 +419,7 @@ function handleClickDescription() {
           }
         }
       }
-
-      if (event.target.dataset.heartId === $heart[j].dataset.heartId) {
-        $heart.forEach(function () {
-          $heart[j].classList.remove('fa-regular');
-          $heart[j].classList.add('fa-solid');
-        });
-      }
+      hearts();
     }
   }
 }
@@ -477,7 +446,12 @@ function viewSwap(event) {
     $list.classList.add('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
+    $oops.classList.add('hidden');
     data.view = 'wishlist';
+    var $descriptions = document.querySelectorAll('.single-product-details-desktop');
+    for (var q = 0; q < $descriptions.length; q++) {
+      $descriptions[q].classList.add('hidden');
+    }
   }
 }
 
@@ -486,21 +460,18 @@ document.addEventListener('DOMContentLoaded', renderData);
 $wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
-  var $heart = document.querySelectorAll('.wishlist-heart');
   var $li = document.querySelectorAll('.single-product-w');
-  var $allHearts = document.querySelectorAll('.fa-heart');
   var closest = event.target.closest('li');
+  var $allHearts = document.querySelectorAll('.fa-heart');
   for (var i = 0; i < $li.length; i++) {
-    if (closest === $li[i]) {
+    if (event.target.tagName === 'I' && closest === $li[i]) {
       data.wishlist.splice(i, 1);
       closest.remove();
-    }
-  }
-  for (var k = 0; k < $heart.length; k++) {
-    for (var j = 0; j < $allHearts.length; j++) {
-      if ($heart[k].dataset.apiId === $allHearts[j].dataset.apiId) {
-        $allHearts[j].classList.remove('fa-solid');
-        $allHearts[j].classList.add('fa-regular');
+      for (var j = 0; j < $allHearts.length; j++) {
+        if (event.target.dataset.apiId === $allHearts[j].dataset.apiId) {
+          $allHearts[j].classList.remove('fa-solid');
+          $allHearts[j].classList.add('fa-regular');
+        }
       }
     }
   }
@@ -550,24 +521,7 @@ function wishlist() {
     $h4.textContent = data.wishlist[k].product.name;
     $div3.appendChild($h4);
 
-    var $span = document.createElement('span');
-    $div3.appendChild($span);
-
-    for (var q = 0; q < 5; q++) {
-      if (q + 0.5 <= data.wishlist[k].product.rating && data.wishlist[k].product.rating < (q + 1)) {
-        var $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star-half-stroke';
-        $span.appendChild($i);
-      } else if (q < data.wishlist[k].product.rating && q + 0.5 < data.wishlist[k].product.rating) {
-        $i = document.createElement('i');
-        $i.className = 'fa-solid fa-star';
-        $span.appendChild($i);
-      } else {
-        $i = document.createElement('i');
-        $i.className = 'fa-regular fa-star';
-        $span.appendChild($i);
-      }
-    }
+    $div3.appendChild(rating(data.wishlist[k].product.rating));
 
     var $p = document.createElement('p');
     $p.className = 'p-search';
@@ -581,10 +535,42 @@ function wishlist() {
     var $button = document.createElement('button');
     $div6.appendChild($button);
 
-    $i = document.createElement('i');
+    var $i = document.createElement('i');
     $i.className = 'fa-solid fa-heart wishlist-heart';
     $i.setAttribute('data-heart-id', data.wishlist[k].wishlistId);
     $i.setAttribute('data-api-id', data.wishlist[k].product.id);
     $button.appendChild($i);
   }
+}
+
+function hearts() {
+  var $allHearts = document.querySelectorAll('.fa-heart');
+  if (event.target.matches('.fa-heart')) {
+    for (var i = 0; i < $allHearts.length; i++) {
+      if (event.target.dataset.apiId === $allHearts[i].dataset.apiId) {
+        $allHearts[i].classList.remove('fa-regular');
+        $allHearts[i].classList.add('fa-solid');
+      }
+    }
+  }
+}
+
+function rating(rating) {
+  var $span = document.createElement('span');
+  for (var j = 0; j < 5; j++) {
+    if (j + 0.5 <= rating && rating < (j + 1)) {
+      var $i = document.createElement('i');
+      $i.className = 'fa-solid fa-star-half-stroke';
+      $span.appendChild($i);
+    } else if (j < rating && j + 0.5 < rating) {
+      $i = document.createElement('i');
+      $i.className = 'fa-solid fa-star';
+      $span.appendChild($i);
+    } else {
+      $i = document.createElement('i');
+      $i.className = 'fa-regular fa-star';
+      $span.appendChild($i);
+    }
+  }
+  return $span;
 }

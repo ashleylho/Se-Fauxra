@@ -21,31 +21,21 @@
   width: 50%;
 }
 
-@media only screen and (min-width: 376px) {
-  .mobile {
-    display: none;
-  }
+.single-product-w {
+  width: 100%;
+}
+
+.desktop {
+  display: none;
 }
 
 @media only screen and (min-width: 768px) {
   .column-third {
     width: 50%;
   }
-}
 
-@media only screen and (min-width: 1000px) {
-  .column-third {
-    width: 33%;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  .desktop {
-    display: none;
-  }
-
-  .wishlist-item {
-    width: 95%;
+  .single-product-w {
+    width: 50%;
   }
 
   .wishlist-none {
@@ -55,16 +45,30 @@
 
   .anchors {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
   }
 
   .search-link,
   .wishlist-link {
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     margin-right: 0;
   }
 
-  .single-product-w {
-    width: 100%;
+  .wishlist-header {
+    margin-top: 0;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .column-third {
+    width: 33%;
   }
 }
