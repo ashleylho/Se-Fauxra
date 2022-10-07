@@ -181,6 +181,10 @@ button {
   font-weight: 500;
 }
 
+.single-product-details-desktop {
+  flex-basis: 100%;
+}
+
 .heart-desktop {
   font-size: 2rem;
   margin-bottom: 1rem;
