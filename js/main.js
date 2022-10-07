@@ -352,7 +352,6 @@ function handleClick(event) {
   if (event.target.className.includes('fa-heart')) {
     hearts();
 
-    // check(data.products, $apiId, closestId, $heart);
     for (var j = 0; j < data.products.length; j++) {
       var newObject = {
         product: data.products[j],
