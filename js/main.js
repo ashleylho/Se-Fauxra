@@ -76,7 +76,7 @@ function handleSubmit(event) {
 function renderData() {
   for (var i = 0; i < data.products.length; i++) {
     var $li = document.createElement('li');
-    $li.className = 'column-third hidden single-product';
+    $li.className = 'column-third single-product';
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-product-type', data.products[i].product_type);
     $li.setAttribute('data-api-id', data.products[i].id);
@@ -329,7 +329,6 @@ function renderData() {
   if (data.view === 'search') {
     $wishlist.classList.add('hidden');
     $searchDiv.classList.remove('hidden');
-    $list.classList.add('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
     data.view = 'search';
@@ -438,7 +437,7 @@ function handleClickDescription() {
 function viewSwap(event) {
   if (event.target === $searchLink) {
     $searchDiv.classList.remove('hidden');
-    $list.classList.add('hidden');
+    $list.classList.remove('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
     $wishlist.classList.add('hidden');
