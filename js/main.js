@@ -20,7 +20,7 @@ $desktop.addEventListener('click', handleClickDescription);
 $mobile.addEventListener('click', handleClickDescription);
 $searchLink.addEventListener('click', viewSwap);
 $wishlistLink.addEventListener('click', viewSwap);
-document.addEventListener('DOMContentLoaded', renderData);
+// document.addEventListener('DOMContentLoaded', renderData);
 $wishlist.addEventListener('click', handleWishlist);
 
 loadData();
@@ -34,6 +34,7 @@ function loadData() {
   xhr.addEventListener('load', function () {
     $spinner.classList.add('hidden');
     data.products = xhr.response;
+    renderData();
   });
   xhr.addEventListener('error', errorMessage);
   xhr.send();
@@ -46,8 +47,8 @@ function errorMessage() {
 
 function handleSubmit(event) {
   event.preventDefault();
-  var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
-  var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
+  // var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
+  // var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
   var $product = document.querySelectorAll('.single-product');
   var input = $search.value.toLowerCase();
   var checkCount = 0;
@@ -60,15 +61,14 @@ function handleSubmit(event) {
     } else {
       $product[i].classList.add('hidden');
     }
-    $productDetailsDesktop[i].classList.add('hidden');
-    $productDetailsMobile[i].classList.add('hidden');
+    // $productDetailsDesktop[i].classList.add('hidden');
+    // $productDetailsMobile[i].classList.add('hidden');
     if (checkCount > 0) {
       $oops.classList.add('hidden');
     } else {
       $oops.classList.remove('hidden');
     }
   }
-
   data.view = 'search';
   $form.reset();
 }
@@ -436,11 +436,13 @@ function handleClickDescription() {
 
 function viewSwap(event) {
   if (event.target === $searchLink) {
+    var $singleProduct = document.querySelectorAll('.single-product');
     $searchDiv.classList.remove('hidden');
     $list.classList.remove('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
     $wishlist.classList.add('hidden');
+    $singleProduct.forEach(product => product.classList.remove('hidden'));
     data.view = 'search';
   } else if (event.target === $wishlistLink) {
     if (data.wishlist.length === 0) {
