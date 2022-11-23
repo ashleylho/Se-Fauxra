@@ -47,13 +47,12 @@ function errorMessage() {
 
 function handleSubmit(event) {
   event.preventDefault();
-  // var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
-  // var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
+  var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
+  var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
   var $product = document.querySelectorAll('.single-product');
   var input = $search.value.toLowerCase();
   var checkCount = 0;
   for (var i = 0; i < $product.length; i++) {
-
     if (data.products[i].name.toLowerCase().includes(input) || data.products[i].product_type.toLowerCase().includes(input)) {
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
@@ -61,8 +60,8 @@ function handleSubmit(event) {
     } else {
       $product[i].classList.add('hidden');
     }
-    // $productDetailsDesktop[i].classList.add('hidden');
-    // $productDetailsMobile[i].classList.add('hidden');
+    $productDetailsDesktop[i].classList.add('hidden');
+    $productDetailsMobile[i].classList.add('hidden');
     if (checkCount > 0) {
       $oops.classList.add('hidden');
     } else {
@@ -75,6 +74,7 @@ function handleSubmit(event) {
 
 function renderData() {
   for (var i = 0; i < data.products.length; i++) {
+    // single products
     var $li = document.createElement('li');
     $li.className = 'column-third single-product';
     $li.setAttribute('data-product-id', i + 1);
@@ -126,6 +126,7 @@ function renderData() {
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
+    // string manipulation
     var stringName = data.products[i].name.slice(10);
     var indexOf = data.products[i].description.toLowerCase().indexOf('for best results');
     if (indexOf > 0) {
@@ -154,6 +155,7 @@ function renderData() {
       bestResultsDescription = bestResultsDescription.charAt(0).toUpperCase() + bestResultsDescription.slice(1);
     }
 
+    // details for desktop
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-desktop hidden';
@@ -238,6 +240,7 @@ function renderData() {
       $div5.appendChild($3rdp);
     }
 
+    // details for mobile
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-api-id', data.products[i].id);
@@ -323,26 +326,25 @@ function renderData() {
       $div4.appendChild($3rdp);
     }
   }
-
   wishlist();
 
-  if (data.view === 'search') {
-    $wishlist.classList.add('hidden');
-    $searchDiv.classList.remove('hidden');
-    $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    data.view = 'search';
-  } else if (data.view === 'wishlist') {
-    $searchDiv.classList.add('hidden');
-    $wishlist.classList.remove('hidden');
-    $list.classList.add('hidden');
-    $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    data.view = 'wishlist';
-  } else if (data.view === 'description') {
-    data.view = 'description';
-    $desktop.classList.remove('hidden');
-  }
+  // if (data.view === 'search') {
+  //   $wishlist.classList.add('hidden');
+  //   $searchDiv.classList.remove('hidden');
+  //   $desktop.classList.add('hidden');
+  //   $mobile.classList.add('hidden');
+  //   data.view = 'search';
+  // } else if (data.view === 'wishlist') {
+  //   $searchDiv.classList.add('hidden');
+  //   $wishlist.classList.remove('hidden');
+  //   $list.classList.add('hidden');
+  //   $desktop.classList.add('hidden');
+  //   $mobile.classList.add('hidden');
+  //   data.view = 'wishlist';
+  // } else if (data.view === 'description') {
+  //   data.view = 'description';
+  //   $desktop.classList.remove('hidden');
+  // }
   for (var k = 0; k < data.wishlist.length; k++) {
     var $hearts = document.querySelectorAll('.fa-heart');
     for (var q = 0; q < $hearts.length; q++) {
@@ -437,11 +439,11 @@ function handleClickDescription() {
 function viewSwap(event) {
   if (event.target === $searchLink) {
     var $singleProduct = document.querySelectorAll('.single-product');
-    $searchDiv.classList.remove('hidden');
+    // $searchDiv.classList.remove('hidden');
     $list.classList.remove('hidden');
-    $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    $wishlist.classList.add('hidden');
+    // $desktop.classList.add('hidden');
+    // $mobile.classList.add('hidden');
+    // $wishlist.classList.add('hidden');
     $singleProduct.forEach(product => product.classList.remove('hidden'));
     data.view = 'search';
   } else if (event.target === $wishlistLink) {
@@ -450,17 +452,38 @@ function viewSwap(event) {
     } else {
       $p.classList.add('hidden');
     }
-    $searchDiv.classList.add('hidden');
-    $wishlist.classList.remove('hidden');
-    $list.classList.add('hidden');
-    $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    $oops.classList.add('hidden');
+    // $searchDiv.classList.add('hidden');
+    // $wishlist.classList.remove('hidden');
+    // $list.classList.add('hidden');
+    // $desktop.classList.add('hidden');
+    // $mobile.classList.add('hidden');
     data.view = 'wishlist';
     var $descriptions = document.querySelectorAll('.single-product-details-desktop');
     for (var q = 0; q < $descriptions.length; q++) {
       $descriptions[q].classList.add('hidden');
     }
+  }
+  dataView();
+  $oops.classList.add('hidden');
+}
+
+function dataView() {
+  if (data.view === 'search') {
+    $wishlist.classList.add('hidden');
+    $searchDiv.classList.remove('hidden');
+    $desktop.classList.add('hidden');
+    $mobile.classList.add('hidden');
+    data.view = 'search';
+  } else if (data.view === 'wishlist') {
+    $searchDiv.classList.add('hidden');
+    $wishlist.classList.remove('hidden');
+    $list.classList.add('hidden');
+    $desktop.classList.add('hidden');
+    $mobile.classList.add('hidden');
+    data.view = 'wishlist';
+  } else if (data.view === 'description') {
+    data.view = 'description';
+    $desktop.classList.remove('hidden');
   }
 }
 
