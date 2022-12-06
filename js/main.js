@@ -389,7 +389,7 @@ function handleClick(event) {
 
 function cloneProduct(node) {
   var $wishlistItem = node.cloneNode(true);
-  $wishlistItem.className = 'column-half single-product-w';
+  $wishlistItem.className = 'column-third single-product';
   $wishlistUl.appendChild($wishlistItem);
 }
 
@@ -517,7 +517,7 @@ function wishlistMessage() {
 function wishlist() {
   for (var k = 0; k < data.wishlist.length; k++) {
     var $li = document.createElement('li');
-    $li.className = 'column-half single-product-w';
+    $li.className = 'column-third single-product-w';
     $li.setAttribute('data-api-id', data.wishlist[k].product.id);
     $li.setAttribute('data-product-type', data.wishlist[k].product.product_type);
     $wishlistUl.appendChild($li);
