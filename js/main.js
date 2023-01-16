@@ -389,7 +389,7 @@ function handleClick(event) {
 
 function cloneProduct(node) {
   var $wishlistItem = node.cloneNode(true);
-  $wishlistItem.className = 'column-third single-product';
+  $wishlistItem.className = 'column-third single-product-w';
   $wishlistUl.appendChild($wishlistItem);
 }
 
@@ -441,7 +441,7 @@ function viewSwap(event) {
     var $singleProduct = document.querySelectorAll('.single-product');
     // $searchDiv.classList.remove('hidden');
     $list.classList.remove('hidden');
-    // $desktop.classList.add('hidden');
+    $desktop.classList.add('hidden');
     // $mobile.classList.add('hidden');
     // $wishlist.classList.add('hidden');
     $singleProduct.forEach(product => product.classList.remove('hidden'));
@@ -458,10 +458,12 @@ function viewSwap(event) {
     // $desktop.classList.add('hidden');
     // $mobile.classList.add('hidden');
     data.view = 'wishlist';
-    var $descriptions = document.querySelectorAll('.single-product-details-desktop');
-    for (var q = 0; q < $descriptions.length; q++) {
-      $descriptions[q].classList.add('hidden');
-    }
+  }
+  var $desktopDescriptions = document.querySelectorAll('.single-product-details-desktop');
+  var $mobileDescriptions = document.querySelectorAll('.single-product-details-mobile');
+  for (var i = 0; i < $desktopDescriptions.length; i++) {
+    $desktopDescriptions[i].classList.add('hidden');
+    $mobileDescriptions[i].classList.add('hidden');
   }
   dataView();
   $oops.classList.add('hidden');
@@ -493,8 +495,8 @@ function handleWishlist(event) {
   var $allHearts = document.querySelectorAll('.fa-heart');
   for (var i = 0; i < $li.length; i++) {
     if (event.target.tagName === 'I' && closest === $li[i]) {
-      data.wishlist.splice(i, 1);
       closest.remove();
+      data.wishlist.splice(i, 1);
       for (var j = 0; j < $allHearts.length; j++) {
         if (event.target.dataset.apiId === $allHearts[j].dataset.apiId) {
           $allHearts[j].classList.remove('fa-solid');
