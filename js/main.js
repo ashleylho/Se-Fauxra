@@ -14,6 +14,17 @@ var $wishlistUl = document.querySelector('.wishlist-ul');
 var $p = document.querySelector('.wishlist-none');
 var $oops = document.querySelector('.oops');
 
+$form.addEventListener('submit', handleSubmit);
+$productList.addEventListener('click', handleClick);
+$desktop.addEventListener('click', handleClickDescription);
+$mobile.addEventListener('click', handleClickDescription);
+$searchLink.addEventListener('click', viewSwap);
+$wishlistLink.addEventListener('click', viewSwap);
+// document.addEventListener('DOMContentLoaded', renderData);
+$wishlist.addEventListener('click', handleWishlist);
+
+loadData();
+
 function loadData() {
   var $spinner = document.querySelector('.spinner');
   var xhr = new XMLHttpRequest();
@@ -23,6 +34,7 @@ function loadData() {
   xhr.addEventListener('load', function () {
     $spinner.classList.add('hidden');
     data.products = xhr.response;
+    renderData();
   });
   xhr.addEventListener('error', errorMessage);
   xhr.send();
@@ -33,40 +45,38 @@ function errorMessage() {
   $error.classList.remove('hidden');
 }
 
-loadData();
-
-$form.addEventListener('submit', handleSubmit);
-
 function handleSubmit(event) {
-  var $productDetailsLi = document.querySelectorAll('.single-product-details-desktop');
-  var $productDetailsLiM = document.querySelectorAll('.single-product-details-mobile');
   event.preventDefault();
+  var $productDetailsDesktop = document.querySelectorAll('.single-product-details-desktop');
+  var $productDetailsMobile = document.querySelectorAll('.single-product-details-mobile');
   var $product = document.querySelectorAll('.single-product');
-  var text = $search.value.toLowerCase();
+  var input = $search.value.toLowerCase();
+  var checkCount = 0;
   for (var i = 0; i < $product.length; i++) {
-    if (text === $product[i].dataset.productType) {
-      $oops.classList.add('hidden');
+    if (data.products[i].name.toLowerCase().includes(input) || data.products[i].product_type.toLowerCase().includes(input)) {
       $list.classList.remove('hidden');
       $product[i].classList.remove('hidden');
+      checkCount++;
     } else {
       $product[i].classList.add('hidden');
     }
-    $productDetailsLi[i].classList.add('hidden');
-    $productDetailsLiM[i].classList.add('hidden');
+    $productDetailsDesktop[i].classList.add('hidden');
+    $productDetailsMobile[i].classList.add('hidden');
+    if (checkCount > 0) {
+      $oops.classList.add('hidden');
+    } else {
+      $oops.classList.remove('hidden');
+    }
   }
-  var categories = ['eyeshadow', 'bronzer', 'blush', 'foundation', 'eyeliner', 'lipstick', 'mascara'];
-  if (!categories.includes(text)) {
-    $oops.classList.remove('hidden');
-  }
-
   data.view = 'search';
   $form.reset();
 }
 
 function renderData() {
   for (var i = 0; i < data.products.length; i++) {
+    // single products
     var $li = document.createElement('li');
-    $li.className = 'column-third hidden single-product';
+    $li.className = 'column-third single-product';
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-product-type', data.products[i].product_type);
     $li.setAttribute('data-api-id', data.products[i].id);
@@ -116,6 +126,7 @@ function renderData() {
     $i.setAttribute('data-api-id', data.products[i].id);
     $button.appendChild($i);
 
+    // string manipulation
     var stringName = data.products[i].name.slice(10);
     var indexOf = data.products[i].description.toLowerCase().indexOf('for best results');
     if (indexOf > 0) {
@@ -144,6 +155,7 @@ function renderData() {
       bestResultsDescription = bestResultsDescription.charAt(0).toUpperCase() + bestResultsDescription.slice(1);
     }
 
+    // details for desktop
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.className = 'single-product-details-desktop hidden';
@@ -228,6 +240,7 @@ function renderData() {
       $div5.appendChild($3rdp);
     }
 
+    // details for mobile
     $li = document.createElement('li');
     $li.setAttribute('data-product-id', i + 1);
     $li.setAttribute('data-api-id', data.products[i].id);
@@ -313,27 +326,25 @@ function renderData() {
       $div4.appendChild($3rdp);
     }
   }
-
   wishlist();
 
-  if (data.view === 'search') {
-    $wishlist.classList.add('hidden');
-    $searchDiv.classList.remove('hidden');
-    $list.classList.add('hidden');
-    $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    data.view = 'search';
-  } else if (data.view === 'wishlist') {
-    $searchDiv.classList.add('hidden');
-    $wishlist.classList.remove('hidden');
-    $list.classList.add('hidden');
-    $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    data.view = 'wishlist';
-  } else if (data.view === 'description') {
-    data.view = 'description';
-    $desktop.classList.remove('hidden');
-  }
+  // if (data.view === 'search') {
+  //   $wishlist.classList.add('hidden');
+  //   $searchDiv.classList.remove('hidden');
+  //   $desktop.classList.add('hidden');
+  //   $mobile.classList.add('hidden');
+  //   data.view = 'search';
+  // } else if (data.view === 'wishlist') {
+  //   $searchDiv.classList.add('hidden');
+  //   $wishlist.classList.remove('hidden');
+  //   $list.classList.add('hidden');
+  //   $desktop.classList.add('hidden');
+  //   $mobile.classList.add('hidden');
+  //   data.view = 'wishlist';
+  // } else if (data.view === 'description') {
+  //   data.view = 'description';
+  //   $desktop.classList.remove('hidden');
+  // }
   for (var k = 0; k < data.wishlist.length; k++) {
     var $hearts = document.querySelectorAll('.fa-heart');
     for (var q = 0; q < $hearts.length; q++) {
@@ -344,8 +355,6 @@ function renderData() {
     }
   }
 }
-
-$productList.addEventListener('click', handleClick);
 
 function handleClick(event) {
   var closestId = event.target.closest('li');
@@ -380,11 +389,11 @@ function handleClick(event) {
 
 function cloneProduct(node) {
   var $wishlistItem = node.cloneNode(true);
-  $wishlistItem.className = 'column-half single-product-w';
+  $wishlistItem.className = 'column-third single-product-w';
   $wishlistUl.appendChild($wishlistItem);
 }
 
-function check(array, apiId) {
+function checkPresence(array, apiId) {
   var found = array.some(el => el.apiId === apiId);
   return found;
 }
@@ -396,7 +405,7 @@ function addWishlist(apiId, heart, closest, singleProduct) {
       apiId: data.products[j].id,
       wishlistId: data.nextWishlistId
     };
-    if (event.target.dataset.apiId === heart[j].dataset.apiId && check(data.wishlist, Number(apiId)) === false) {
+    if (event.target.dataset.apiId === heart[j].dataset.apiId && checkPresence(data.wishlist, Number(apiId)) === false) {
       data.wishlist.push(newObject);
       data.nextWishlistId++;
 
@@ -410,9 +419,6 @@ function addWishlist(apiId, heart, closest, singleProduct) {
     }
   }
 }
-
-$desktop.addEventListener('click', handleClickDescription);
-$mobile.addEventListener('click', handleClickDescription);
 
 function handleClickDescription() {
   var $heart = document.querySelectorAll('.fa-heart');
@@ -430,16 +436,15 @@ function handleClickDescription() {
   }
 }
 
-$searchLink.addEventListener('click', viewSwap);
-$wishlistLink.addEventListener('click', viewSwap);
-
 function viewSwap(event) {
   if (event.target === $searchLink) {
-    $searchDiv.classList.remove('hidden');
-    $list.classList.add('hidden');
+    var $singleProduct = document.querySelectorAll('.single-product');
+    // $searchDiv.classList.remove('hidden');
+    $list.classList.remove('hidden');
     $desktop.classList.add('hidden');
-    $mobile.classList.add('hidden');
-    $wishlist.classList.add('hidden');
+    // $mobile.classList.add('hidden');
+    // $wishlist.classList.add('hidden');
+    $singleProduct.forEach(product => product.classList.remove('hidden'));
     data.view = 'search';
   } else if (event.target === $wishlistLink) {
     if (data.wishlist.length === 0) {
@@ -447,23 +452,42 @@ function viewSwap(event) {
     } else {
       $p.classList.add('hidden');
     }
+    // $searchDiv.classList.add('hidden');
+    // $wishlist.classList.remove('hidden');
+    // $list.classList.add('hidden');
+    // $desktop.classList.add('hidden');
+    // $mobile.classList.add('hidden');
+    data.view = 'wishlist';
+  }
+  var $desktopDescriptions = document.querySelectorAll('.single-product-details-desktop');
+  var $mobileDescriptions = document.querySelectorAll('.single-product-details-mobile');
+  for (var i = 0; i < $desktopDescriptions.length; i++) {
+    $desktopDescriptions[i].classList.add('hidden');
+    $mobileDescriptions[i].classList.add('hidden');
+  }
+  dataView();
+  $oops.classList.add('hidden');
+}
+
+function dataView() {
+  if (data.view === 'search') {
+    $wishlist.classList.add('hidden');
+    $searchDiv.classList.remove('hidden');
+    $desktop.classList.add('hidden');
+    $mobile.classList.add('hidden');
+    data.view = 'search';
+  } else if (data.view === 'wishlist') {
     $searchDiv.classList.add('hidden');
     $wishlist.classList.remove('hidden');
     $list.classList.add('hidden');
     $desktop.classList.add('hidden');
     $mobile.classList.add('hidden');
-    $oops.classList.add('hidden');
     data.view = 'wishlist';
-    var $descriptions = document.querySelectorAll('.single-product-details-desktop');
-    for (var q = 0; q < $descriptions.length; q++) {
-      $descriptions[q].classList.add('hidden');
-    }
+  } else if (data.view === 'description') {
+    data.view = 'description';
+    $desktop.classList.remove('hidden');
   }
 }
-
-document.addEventListener('DOMContentLoaded', renderData);
-
-$wishlist.addEventListener('click', handleWishlist);
 
 function handleWishlist(event) {
   var $li = document.querySelectorAll('.single-product-w');
@@ -471,8 +495,8 @@ function handleWishlist(event) {
   var $allHearts = document.querySelectorAll('.fa-heart');
   for (var i = 0; i < $li.length; i++) {
     if (event.target.tagName === 'I' && closest === $li[i]) {
-      data.wishlist.splice(i, 1);
       closest.remove();
+      data.wishlist.splice(i, 1);
       for (var j = 0; j < $allHearts.length; j++) {
         if (event.target.dataset.apiId === $allHearts[j].dataset.apiId) {
           $allHearts[j].classList.remove('fa-solid');
@@ -481,7 +505,10 @@ function handleWishlist(event) {
       }
     }
   }
+  wishlistMessage();
+}
 
+function wishlistMessage() {
   if (data.wishlist.length === 0) {
     $p.classList.remove('hidden');
   } else {
@@ -489,16 +516,10 @@ function handleWishlist(event) {
   }
 }
 
-if (data.wishlist.length === 0) {
-  $p.classList.remove('hidden');
-} else {
-  $p.classList.add('hidden');
-}
-
 function wishlist() {
   for (var k = 0; k < data.wishlist.length; k++) {
     var $li = document.createElement('li');
-    $li.className = 'column-half single-product-w';
+    $li.className = 'column-third single-product-w';
     $li.setAttribute('data-api-id', data.wishlist[k].product.id);
     $li.setAttribute('data-product-type', data.wishlist[k].product.product_type);
     $wishlistUl.appendChild($li);

@@ -29,14 +29,21 @@
   display: none;
 }
 
+@media only screen and (min-width: 320px) {
+  .anchors {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .column-third {
     width: 50%;
   }
 
-  .single-product-w {
+  /* .single-product-w {
     width: 50%;
-  }
+  } */
 
   .wishlist-none {
     margin-right: 1.5rem;
