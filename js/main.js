@@ -1,3 +1,4 @@
+var $sefauxra = document.querySelector('.sefauxra');
 var $productList = document.querySelector('#product-list');
 var $search = document.querySelector('.search');
 var $form = document.querySelector('form');
@@ -20,7 +21,7 @@ $desktop.addEventListener('click', handleClickDescription);
 $mobile.addEventListener('click', handleClickDescription);
 $searchLink.addEventListener('click', viewSwap);
 $wishlistLink.addEventListener('click', viewSwap);
-// document.addEventListener('DOMContentLoaded', renderData);
+$sefauxra.addEventListener('click', viewSwap);
 $wishlist.addEventListener('click', handleWishlist);
 
 loadData();
@@ -328,23 +329,6 @@ function renderData() {
   }
   wishlist();
 
-  // if (data.view === 'search') {
-  //   $wishlist.classList.add('hidden');
-  //   $searchDiv.classList.remove('hidden');
-  //   $desktop.classList.add('hidden');
-  //   $mobile.classList.add('hidden');
-  //   data.view = 'search';
-  // } else if (data.view === 'wishlist') {
-  //   $searchDiv.classList.add('hidden');
-  //   $wishlist.classList.remove('hidden');
-  //   $list.classList.add('hidden');
-  //   $desktop.classList.add('hidden');
-  //   $mobile.classList.add('hidden');
-  //   data.view = 'wishlist';
-  // } else if (data.view === 'description') {
-  //   data.view = 'description';
-  //   $desktop.classList.remove('hidden');
-  // }
   for (var k = 0; k < data.wishlist.length; k++) {
     var $hearts = document.querySelectorAll('.fa-heart');
     for (var q = 0; q < $hearts.length; q++) {
@@ -437,13 +421,10 @@ function handleClickDescription() {
 }
 
 function viewSwap(event) {
-  if (event.target === $searchLink) {
+  if (event.target === $searchLink || event.target === $sefauxra) {
     var $singleProduct = document.querySelectorAll('.single-product');
-    // $searchDiv.classList.remove('hidden');
     $list.classList.remove('hidden');
     $desktop.classList.add('hidden');
-    // $mobile.classList.add('hidden');
-    // $wishlist.classList.add('hidden');
     $singleProduct.forEach(product => product.classList.remove('hidden'));
     data.view = 'search';
   } else if (event.target === $wishlistLink) {
@@ -452,11 +433,6 @@ function viewSwap(event) {
     } else {
       $p.classList.add('hidden');
     }
-    // $searchDiv.classList.add('hidden');
-    // $wishlist.classList.remove('hidden');
-    // $list.classList.add('hidden');
-    // $desktop.classList.add('hidden');
-    // $mobile.classList.add('hidden');
     data.view = 'wishlist';
   }
   var $desktopDescriptions = document.querySelectorAll('.single-product-details-desktop');

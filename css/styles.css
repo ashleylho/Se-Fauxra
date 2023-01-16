@@ -6,17 +6,6 @@ header {
   background: #2c3333;
 }
 
-h1 {
-  font-family: Anton, sans-serif;
-  font-weight: 400;
-  font-size: 35px;
-  line-height: 48px;
-  color: rgba(231, 246, 242, 0.87);
-  text-shadow: 2px 2px 2px #788f95;
-  letter-spacing: 0.08rem;
-  margin-left: 1.25rem;
-}
-
 a {
   font-size: 1.25rem;
   color: white;
@@ -34,6 +23,21 @@ button,
 
 a:hover {
   text-shadow: rgb(227, 238, 235) 0.5px 0.5px;
+}
+
+.sefauxra {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 48px;
+  color: rgba(231, 246, 242, 0.87);
+  text-shadow: 2px 2px 2px #788f95;
+  letter-spacing: 0.08rem;
+  margin-left: 1.25rem;
+}
+
+.logo {
+  margin: 0.75rem 0;
 }
 
 h2 {
@@ -87,7 +91,6 @@ button {
 }
 
 .anchors {
-  text-align: right;
   margin: auto 0;
 }
 
