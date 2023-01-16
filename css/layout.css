@@ -34,6 +34,12 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  .search-link,
+  .wishlist-link {
+    padding-right: 0.5rem;
+    font-size: 1.1rem;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -41,18 +47,9 @@
     width: 50%;
   }
 
-  /* .single-product-w {
-    width: 50%;
-  } */
-
   .wishlist-none {
     margin-right: 1.5rem;
     line-height: 1.5rem;
-  }
-
-  .anchors {
-    display: flex;
-    justify-content: flex-end;
   }
 
   .mobile {
@@ -65,8 +62,8 @@
 
   .search-link,
   .wishlist-link {
-    font-size: 1.5rem;
-    margin-right: 0;
+    font-size: 1.3rem;
+    margin-right: 1rem;
   }
 
   .wishlist-header {

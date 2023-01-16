@@ -1,3 +1,4 @@
+var $sefauxra = document.querySelector('.sefauxra');
 var $productList = document.querySelector('#product-list');
 var $search = document.querySelector('.search');
 var $form = document.querySelector('form');
@@ -20,7 +21,7 @@ $desktop.addEventListener('click', handleClickDescription);
 $mobile.addEventListener('click', handleClickDescription);
 $searchLink.addEventListener('click', viewSwap);
 $wishlistLink.addEventListener('click', viewSwap);
-// document.addEventListener('DOMContentLoaded', renderData);
+$sefauxra.addEventListener('click', viewSwap);
 $wishlist.addEventListener('click', handleWishlist);
 
 loadData();
@@ -420,7 +421,7 @@ function handleClickDescription() {
 }
 
 function viewSwap(event) {
-  if (event.target === $searchLink) {
+  if (event.target === $searchLink || event.target === $sefauxra) {
     var $singleProduct = document.querySelectorAll('.single-product');
     $list.classList.remove('hidden');
     $desktop.classList.add('hidden');
